@@ -8,7 +8,7 @@ public class MapMain {
 	public static void main(String[] args) {
 //		ejemploDeHasMap2();
 //		ejemploDeLinkedHashMap();
-		ejemploTreeMap(5);
+		ejemploTreeMap(10);
 	}
 
 	public static void ejemploDeHasMap() {
@@ -58,17 +58,38 @@ public class MapMain {
 		TreeMap<Integer, String> puntuaciones = new TreeMap<>();
 		puntuaciones.put(8, "Notable alto");
 		puntuaciones.put(5, "Aprobado");
+		puntuaciones.put(4, "Suspenso");
 		puntuaciones.put(10, "Matricula H.");
 		puntuaciones.put(6, "Bien");
 		puntuaciones.put(9, "Sobresaliente");
 		puntuaciones.put(7, "Notable");
-		for (Entry<Integer, String> entry : puntuaciones.entrySet()) {
-			System.out.println(entry.getKey() + " " + entry.getValue());
+		
+		if (nota<=4) {
+			System.out.println(puntuaciones.get(4));	
+		}else if(nota==5) {
+			System.out.println(puntuaciones.get(5));
+		}else if(nota==6) {
+			System.out.println(puntuaciones.get(6));
+		}else if(nota==7) {
+			System.out.println(puntuaciones.get(7));
+		}else if(nota==8) {
+			System.out.println(puntuaciones.get(8));
+		}else if(nota==9) {
+			System.out.println(puntuaciones.get(9));
+		}else if(nota==10) {
+			System.out.println(puntuaciones.get(6));
 		}
-		
-		
-		System.out.println(puntuaciones.values());
-		System.out.println("Por debajo de " + puntuaciones.firstKey() + " es suspenso");
+
+//		for (Entry<Integer, String> entry : puntuaciones.entrySet()) {
+//			//System.out.println(entry.getKey() + " " + entry.getValue());
+//			if (nota<=entry.getKey()) {
+//				System.out.println(entry.getValue());
+//			}
+//		}
+//		
+//		
+//		System.out.println(puntuaciones.values());
+//		System.out.println("Por debajo de " + puntuaciones.firstKey() + " es suspenso");
 		
 		
 	}
