@@ -18,18 +18,37 @@ public class FuncionesBásicos {
 //		int num1 = sc.nextInt();
 //		int num2 = sc.nextInt();
 //		int resultado = 0;
-//
+
+		// Opcion 1: funcion sin parametros y sin tipo de retorno
+//		menu();
+//		holaMundo();
+		// opcion 2: funcion sin parametros y con tipo de retorno
+//		System.out.println(menu2());
+
+		// Opcion 3: funcion con parametros y sin tipo de retorno
+		holaMundo("Alvaro");
+		// sumaVoid(num1, num2);
+
+		// opcion 4: funcion con parametros y con tipo de retorno
+		obtenerSaludo("Alvaro", "Blanco");
+		
 //		resultado = suma(num1, num2);
 //		// resultado = otraSuma(num1, String.valueOf(num2));
-//
 //		System.out.println(suma(num1, num2));
 //		System.out.println(resultado);
 //		
-		// sumaVoid(num1, num2);
-		
-		
-	holaMundo();
-	holaMundo("Alvaro");
+
+	}
+	// Opcion 1: funcion sin parametros y sin tipo de retorno
+	/*
+	 * void indica que no devuelve nada
+	 */
+
+	static void menu() {
+		System.out.println("Bienvenidos al E-commerce de zapatillas:");
+		System.out.println("1- ver zapatillas");
+		System.out.println("2- comprar zapatillas");
+		System.out.println("3- salir");
 	}
 
 	private static void holaMundo() {
@@ -37,7 +56,25 @@ public class FuncionesBásicos {
 	}
 
 	private static void holaMundo(String nombre) {
-		System.out.println("Hola "+nombre);
+		System.out.println("Hola " + nombre);
+	}
+
+	// opcion 2: funcion sin parametros y con tipo de retorno
+
+	static String menu2() {
+
+		return "Bienvenidos al E-commerce de zapatillas:\n1- Ver zapatillas\n2- comprar zapatillas\3- salir";
+	}
+
+	static double getPrice() {
+
+		return 100.99;
+	}
+
+	// opcion 4: funcion con parametros y con tipo de retorno
+
+	static String obtenerSaludo(String nombre, String apellidos) {
+		return "Hola " + nombre + " " + apellidos;
 	}
 
 	// Devuelve el número entero
@@ -75,3 +112,4 @@ public class FuncionesBásicos {
 	// Siempre es muy recomendable que una función tiene que ser muy útil y no muy
 	// largas
 }
+
