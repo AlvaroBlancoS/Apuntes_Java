@@ -11,6 +11,23 @@ public class OperadorTernario {
 		p2.presentar();
 	}
 
+	// Estos métodos muestran que diferencia hay entre condicional y operador
+	// ternario
+	public static void condicionalNormal(int edad) {
+		boolean esMayor = edad >= 18;
+		if (esMayor) {// si true entra aqui
+			System.out.println("Es mayor de edad");
+		} else {// si false entra aqui
+			System.out.println("Es menor de edad");
+		}
+	}
+
+	public static String operadorTernario(int edad) {
+		return (edad >= 18) ? "Eres mayor de edad" : "Eres menor de edad";
+	}
+
+	// ---------------------
+
 }
 
 class Personas {
