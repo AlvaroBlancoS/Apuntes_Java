@@ -3,7 +3,7 @@ package EjerciciosHerencia_Polimorfismo;
 import java.util.Scanner;
 
 public class Main {
-	Figura of;
+	static Figura of;
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
@@ -42,21 +42,21 @@ public class Main {
 	}
 
 	private static String circulo(double numero) {
-		Figura of = new Circulo(numero);
+		of = new Circulo(numero);
 		double resultadoArea = of.areaCirculoYcuadrado(numero);
 		double resultadoPerimetro = of.perimetroCirculoYcuadrado(numero);
 		return "Area " + resultadoArea + "\nPerimetro: " + resultadoPerimetro;
 	}
 
 	private static String cuadrado(double numero) {
-		Figura of = new Cuadrado();
+		of = new Cuadrado();
 		double resultadoArea = of.areaCirculoYcuadrado(numero);
 		double resultadoPerimetro = of.perimetroCirculoYcuadrado(numero);
 		return "Area " + resultadoArea + "\nPerimetro: " + resultadoPerimetro;
 	}
 
 	private static String rectangulo(double numero, double numero2) {
-		Figura of = new Rectangulo();
+		of = new Rectangulo();
 		double resultadoArea = of.areaRectangulo(numero, numero2);
 		double resultadoPerimetro = of.areaRectangulo(numero, numero2);
 		return "Area " + resultadoArea + "\nPerimetro: " + resultadoPerimetro;
