@@ -7,7 +7,8 @@ public class ArreglosSencillos {
 	public static void main(String[] args) {
 		// multidimensional();
 //		primerEjemploArrayList();
-		ejemploArrayListConIterator();
+		// ejemploArrayListConIterator();
+		mayorOmenor();
 	}
 
 	public static void arraySencillo() {
@@ -56,6 +57,24 @@ public class ArreglosSencillos {
 			}
 		}
 
+	}
+
+	public static void mayorOmenor() {
+
+		int array[] = { 3, 8, 9, 2, 10, 8, 5, 10, 2, 3 };
+		int mayor, menor;
+		mayor = menor = array[0];
+
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] > mayor) {
+				mayor = array[i];
+			}
+			if (array[i] < menor) {
+				menor = array[i];
+			}
+		}
+		System.out.println("El mayor valor es: " + mayor);
+		System.out.println("El menor valor es: " + menor);
 	}
 
 	public static void ejemploConClaseArray() {
