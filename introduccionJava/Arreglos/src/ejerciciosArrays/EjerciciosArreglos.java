@@ -1,14 +1,35 @@
 package ejerciciosArrays;
 
-
 public class EjerciciosArreglos {
 
 	public static void main(String[] args) {
 
-		// primerEjercicio(6, -2, 73, 18, 45, 2, 51);
-		segundoEjercicio(5);
+//		primerEjercicio(6, -2, 73, 18, 45, 2, 51);
+//		segundoEjercicio(5);
+//		tercerEjemplo();
 //		confirmarDNI("5350410");
 
+	}
+
+	// Saber cuantas veces se repite cada numero de un arreglo y cual es el numero de veces que aparece el numero mayor
+	public static void tercerEjemplo() {
+		int[] calificaciones = { 2, 1, 2, 4, 4, 5, 5, 3 };
+		int[] contador = new int[calificaciones.length];
+
+		for (int i = 0; i < calificaciones.length; i++) {
+			contador[calificaciones[i]] += 1;
+		}
+		int max = 0;
+		for (int i = 0; i < contador.length; i++) {
+			System.out.println("Calificacion " + i + ": " + contador[i] + " veces");
+
+			if (contador[i] > max) {
+				max = contador[i];
+			}
+
+		}
+
+		System.out.println(max);
 	}
 
 	public static void primerEjercicio(int num1, int num2, int num3, int num4, int num5, int num6, int num7) {
@@ -30,8 +51,6 @@ public class EjerciciosArreglos {
 
 	}
 
-
-
 	/*
 	 * Construye un programa que genere 100 números aleatorios mediante el uso de la
 	 * función Math.random y que posteriormente ofrezca al usuario la posibilidad
@@ -52,9 +71,9 @@ public class EjerciciosArreglos {
 
 			if (nums[i] > numeroMayor) {
 				numeroMayor = nums[i];
-	
+
 			}
-			
+
 //			else if (numeros<nums [i]){
 //				numeroMenor = nums [i];
 //			}
@@ -62,18 +81,17 @@ public class EjerciciosArreglos {
 //			sum += nums[i];
 
 		}
-			int p = 0;
-		while (p<numeros) {
-			System.out.println(nums [p]);
+		int p = 0;
+		while (p < numeros) {
+			System.out.println(nums[p]);
 			numeroMenor = nums[0];
-			if (numeroMenor>nums[p]) {
-				numeroMenor = nums [p];
-			}else if (numeroMenor>nums[p]-1) {
-				numeroMenor = nums [p];
+			if (numeroMenor > nums[p]) {
+				numeroMenor = nums[p];
+			} else if (numeroMenor > nums[p] - 1) {
+				numeroMenor = nums[p];
 			}
 			p++;
 		}
-		
 
 //		System.out.println("Primera posicion---" + nums[0]);
 
