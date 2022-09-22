@@ -8,7 +8,11 @@ public class ArreglosSencillos {
 		// multidimensional();
 //		primerEjemploArrayList();
 		// ejemploArrayListConIterator();
-		mayorOmenor();
+//		mayorOmenor();
+		
+		for (int i = 0; i < rellenarArray().length; i++) {
+			System.out.println(i);
+		}
 	}
 
 	public static void arraySencillo() {
@@ -89,6 +93,19 @@ public class ArreglosSencillos {
 		for (int i = 0; i < dato.length; i++) {
 			System.out.println("Se llama " + dato[i].getNombre() + " y tiene " + dato[i].getEdad() + " anios");
 		}
+
+	}
+
+	// Como crear un metodo array
+	public static int[] rellenarArray() {
+		int num[] = new int[10];
+		int a = 0;
+		for (int i = 0; i < num.length; i++) {
+			//num[i] = a;
+			
+		}
+
+		return num;
 
 	}
 
@@ -204,3 +221,4 @@ class Personas {
 	}
 
 }
+
