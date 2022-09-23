@@ -12,23 +12,39 @@ public class bucleWhile {
 	public static void main(String[] args) {
 //		primeraOpcion();
 		// segundaOpcion();
-		//primerBucleWhile();
+		// primerBucleWhile();
 
-		
-		if (esPrimo(5)) {
-			System.out.println("Es primo");
-		}else {
-			System.out.println("No es primo");
-		}
+//		if (esPrimo(5)) {
+//			System.out.println("Es primo");
+//		}else {
+//			System.out.println("No es primo");
+//		}
+
 	}
+
+	//
+	public static void laSuma() {
+		int x = 0;
+		int y = 0;
+
+		while (x < 5) {
+			y += x;
+
+			x++;
+
+		}
+		System.out.println(y);
+	}
+
+
 
 	public static void primerBucleWhile() {
 		int count = 0;
 		while (count < 10) {// Inicio
 			count++;// Condicion
 			if (count == 6) {
-				//continue;//Salta el valor 6 y continua a la siguiente iteracion
-				break;//rompe el flujo de ejecucion
+				// continue;//Salta el valor 6 y continua a la siguiente iteracion
+				break;// rompe el flujo de ejecucion
 			}
 			System.out.println(count + " Hola mundo");
 		}
@@ -62,7 +78,7 @@ public class bucleWhile {
 			System.out.println(temperatura);
 		}
 	}
-	
+
 	public static boolean esPrimo(int numero) {
 		int contador = 2;
 		boolean primo = true;
