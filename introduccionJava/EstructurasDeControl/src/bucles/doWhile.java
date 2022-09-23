@@ -12,12 +12,10 @@ public class doWhile {
 	 */
 
 	public static void main(String[] args) {
-//		comparar1();
-//		compararConWhile();
-//		compararConDoWhile();
-		menu();
-//		opcion2();
+		compararConWhileYdoWhile2();
 	}
+	
+
 
 	public static void menu() {
 		Scanner in = new Scanner(System.in);
@@ -77,6 +75,44 @@ public class doWhile {
 			contador++;
 
 		} while (contador < 2);
+	}
+	
+	public static void compararConWhileYdoWhile() {
+		int x= 0;
+		System.out.println("--- DO WHILE ---");
+		do {
+		  System.out.print(x);
+		  x++;
+		} while (x<10);
+		System.out.println("\n--- WHILE ---");
+		int y= 0;
+		while (y<10){
+		  System.out.print(y);
+		  y++;
+		}
+		
+		System.out.println("\nEl resultado es: X = "+x+" Y ="+y);
+	}
+	
+	public static void compararConWhileYdoWhile2() {
+		int x = 0;
+		System.out.println("---WHILE---");
+		do {
+			System.out.print(x);
+			x++;
+		} while (x < 10);
+		System.out.println("\n---DO WHILE---");
+		/* Código Dos */
+		int y = 0;
+		while (y < 10) {
+			System.out.print(y);
+			y++;
+		}
+		
+		
+		System.out.println("\nX ="+x+" Y="+y);
+		
+
 	}
 
 	// Es otra opción como "do while" porque no todos los lenguajes tienen esta
