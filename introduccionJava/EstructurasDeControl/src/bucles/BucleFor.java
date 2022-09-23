@@ -1,6 +1,5 @@
 package bucles;
 
-import java.util.Iterator;
 
 public class BucleFor {
 	/*
@@ -92,6 +91,11 @@ public class BucleFor {
 		for (; temperatura != 15;) {
 			System.out.println(temperatura);
 		}
+	}
+
+	public static void bucleInfinito() {
+		for (double y = 0.1; y != 1.0; y += 0.1)
+			System.out.println(y);
 	}
 
 }
