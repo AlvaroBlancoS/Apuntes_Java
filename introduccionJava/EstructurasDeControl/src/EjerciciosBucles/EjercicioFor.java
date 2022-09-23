@@ -7,6 +7,9 @@ public class EjercicioFor {
 	 * incrementando en 1 su valor cada vez que se ejecute y deberá mostrarse por
 	 * pantalla.
 	 */
+	public static void main(String[] args) {
+
+	}
 
 	// Hay muchas opciones para el bucle for y pongo dos ejemplos
 	public static void ejemplo1() {
@@ -25,10 +28,22 @@ public class EjercicioFor {
 		}
 
 	}
-	
-	public static void main(String[] args) {
-		ejemplo1();
-		ejemplo2();
 
+	public static void calculaNumeroPI() {
+		double y = 4;
+		boolean flag = false;
+
+		for (int x = 3; x < 10000000; x = x + 2) {
+			if (flag) {
+				y += ((double) 4 / x);
+				flag = false;
+			} else {
+				y -= ((double) 4 / x);
+				flag = true;
+			}
+		}
+
+		System.out.println(y);
 	}
+
 }
