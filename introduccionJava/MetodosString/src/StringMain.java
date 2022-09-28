@@ -2,69 +2,102 @@
 public class StringMain {
 
 	public static void main(String[] args) {
-//		String mensaje = " Hola mundo ";
-//		// Cuantos caracteres tienen
-//		System.out.println("Numero de caracteres de " + mensaje + ": con espacios " + mensaje.length());
-//		// Quitamos espacios
-//		String mensajeSinEspacio = mensaje.trim();
-//		System.out.println(
-//				"Numero de caracteres de " + mensajeSinEspacio + ": sin espacios " + mensajeSinEspacio.length());
-//
-//		String enMayuscula = mensajeSinEspacio.toUpperCase();
-//		System.out.println("En mayuscula: " + enMayuscula);
-//		String enMinuscula = mensajeSinEspacio.toLowerCase();
-//		System.out.println("En minuscula: " + enMinuscula);
-//
-//		System.out.println(mensajeSinEspacio.startsWith(mensajeSinEspacio));
-//		System.out.println(mensajeSinEspacio.endsWith(mensajeSinEspacio));
-//		System.out.println(mensajeSinEspacio.indexOf(33));
-//		System.out.println(mensajeSinEspacio.substring(0, 4));
-
-		/*
-		 * startWith("") endsWith("") indexOf("") subString(1,5) equals compare To
-		 */
-
-		// System.out.println(quitarEspacios("- hola mundo "));
 		String miCadena = "Hola mundo";
-		System.out.println(reemplazar(miCadena, miCadena, "Hola a todos"));
+//		System.out.println(miCadena.indexOf("p"));
+		System.out.println(verLaPosicionDeCaracter(miCadena, "o"));
+//		verPosicionesDeCaracteres(miCadena, "o");
 
-//		System.out.println(cortarCadena(miCadena, 3, 10));
-
-//		System.out.println(quitarEspacios("dddd                                             "));
-
-		split("Hola-a-todos", "-");
 	}
 
-	public static String convertirMayuscula(String cadena) {
+	// indexOf() Busca la primera vez que aparece la posicion
+	public static String verLaPosicionDeCaracter(String cadena, String buscar) {
+		String result = "";
+		if (cadena.indexOf(buscar) < 0) {
+			result = "No se encuentra este caracter: " + buscar;
+		} else {
+			result = "La posición es " + cadena.indexOf(buscar);
 
-		return "---Todas en mayúsculas---\n" + cadena.toUpperCase();
+		}
+		return result;
 	}
 
-	public static String convertirMinuscula(String cadena) {
+	//
 
-		return "---Todas en minúsculas---\n" + cadena.toLowerCase();
+	// startWith()
+	public static void buscandoUnaPalabraDeInicio(String cadena) {
+		boolean resultado = cadena.startsWith("Hola");
+		if (resultado) {
+			System.out.println("Empieza la palabra por lo que estoy buscando");
+		} else {
+			System.out.println("No empieza la palabra por lo que no estoy buscando");
+		}
 	}
 
-	public static String quitarEspacios(String cadena) {
-
-		return "---Quitar espacios---\n" + cadena.trim();
+	// endsWith()
+	public static void buscandoUnaPalabraDeFinal(String cadena) {
+		boolean resultado = cadena.endsWith("mundo");
+		if (resultado) {
+			System.out.println("Finaliza la palabra por lo que estoy buscando");
+		} else {
+			System.out.println("No finaliza la palabra por lo que no estoy buscando");
+		}
 	}
 
-	public static String reemplazar(String cadena, String seleccion, String cambio) {
+	// Con bucle FOR
+	public static void recorrerTodalaCadena(String cadena) {
+		for (int i = 0; i < cadena.length(); i++) {
+			System.out.println(cadena.charAt(i));
+		}
 
-		return "Cadena original " + "'" + cadena + "'" + " ha seleccionado por " + "'" + seleccion + "'"
-				+ " para cambiar " + "'" + cambio + "'" + "\ny el resultado es " + cadena.replace(seleccion, cambio);
+	}
+
+	// charAt()
+	public static char verSoloCaracter(String cadena, int posicion) {
+		char caracter = cadena.charAt(posicion);
+		return caracter;
+	}
+
+	// length()
+	public static int longitudCadena(String cadena) {
+		return cadena.length();
 	}
 
 	public static String numeroCaracteres(String cadena) {
 		return cadena + " son: " + cadena.length() + " caracteres";
 	}
 
+	// toUperrCase();
+	public static String convertirMayuscula(String cadena) {
+
+		return "---Todas en mayúsculas---\n" + cadena.toUpperCase();
+	}
+
+	// toLowerCase()
+	public static String convertirMinuscula(String cadena) {
+
+		return "---Todas en minúsculas---\n" + cadena.toLowerCase();
+	}
+
+	// trim()
+	public static String quitarEspacios(String cadena) {
+
+		return "---Quitar espacios---\n" + cadena.trim();
+	}
+
+	// replace()
+	public static String reemplazar(String cadena, String seleccion, String cambio) {
+
+		return "Cadena original " + "'" + cadena + "'" + " ha seleccionado por " + "'" + seleccion + "'"
+				+ " para cambiar " + "'" + cambio + "'" + "\ny el resultado es " + cadena.replace(seleccion, cambio);
+	}
+
+	// substring()
 	public static String cortarCadena(String cadena, int posicionInicial, int posicionFinal) {
 		return "El original es " + cadena + " y ahora es: " + cadena.substring(posicionInicial, posicionFinal);
 	}
 
-	public static void split(String cadena, String simbolo) {
+	// Split()
+	public static void seleccionarTrozos(String cadena, String simbolo) {
 		for (String trozos : cadena.split(simbolo)) {
 			System.out.println(trozos);
 		}

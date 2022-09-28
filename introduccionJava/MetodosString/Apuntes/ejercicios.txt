@@ -1,0 +1,15 @@
+Ejercicio 1
+Paso 1-Realizar el siguiente método/función: traducirPalabra(String pal, int idiom): void
+Paso 2-Tal que dada una palabra y un numero que identifique un idioma 1: alemán y 2 búlgaro
+para traducir idioma.
+Paso 3-Según el idioma y lo que valga la última letra, los cambios serán:
+	-Alemán:
+		..(vocal). Quitar vocal y añadir sufijo "ujem"
+		..(consonante). Quita 2 letras y añade sufijo "ujem"
+	-Búlgaro:
+		..(Vocal). Añadir sufijo "kov":
+			... Ej: silla --> sillakov
+		..(Consonante). Quitar 1 letra y añadir sufijo "kov":
+			... Ej: camión --> camiokov			
+consejo: debes averiguar que métodos de String vale la pena usar y debes crear
+una función booleano si es vocal: isVocal()		
