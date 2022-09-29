@@ -51,16 +51,39 @@ public class ArreglosSencillos {
 		}
 
 	}
-
+	//------IMPORTANTÍSIMO!!!!
 	public static void multidimensional() {
 		System.out.println("---Estoy utilizando un array de multidimensional---");
 		String datos[][] = { { "Pepito", "Maria", "Juanito", "Laurita" }, { "Coche", "Moto", "Avion", "Helicoptero" } };
 		for (int i = 0; i < datos.length; i++) {
 			for (int j = 0; j < datos[i].length; j++) {
-				System.out.println(datos[i][j]);
+//				System.out.println(datos[i][j]);
+				System.out.println(datos[0][j]+" tiene "+datos[1][j]);
 			}
 		}
 
+	}
+	//-----IMPORTANTÍSIMO!!!!
+	public static void bidimensional() {
+		//Tiene dos filas y cuatro columnas
+		int arrayBi[][] = new int [2][4];
+		arrayBi[0][0]=1;
+		arrayBi[0][1]=2;
+		arrayBi[0][2]=3;
+		arrayBi[0][3]=4;
+		
+		arrayBi[1][0]=10;
+		arrayBi[1][1]=20;
+		arrayBi[1][2]=30;
+		arrayBi[1][3]=40;
+		
+		for (int i = 0; i < arrayBi.length; i++) {
+			System.out.println("Valor de i: "+i);
+			for (int j = 0; j < arrayBi[1].length; j++) {
+				System.out.println("Estoy en i (fila) = "+i+", j (columna) = "+j);
+				System.out.println(arrayBi[i][j]);
+			}
+		}
 	}
 
 	public static void mayorOmenor() {
