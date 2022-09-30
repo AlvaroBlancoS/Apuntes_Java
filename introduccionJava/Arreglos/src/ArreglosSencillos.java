@@ -168,6 +168,25 @@ public class ArreglosSencillos {
 		}
 
 	}
+	
+	public static void convertirDeArrayListAarray() {
+		ArrayList<String> lista = new ArrayList<>();
+		lista.add("Primer elemento");
+		lista.add("Segundo elemento");
+		lista.add("Tercer elemento");
+		String array[] = new String[lista.size()];
+		for (int i = 0; i < lista.size(); i++) {
+			array[i] = lista.get(i);
+		}
+
+//		for (Object arrayObjeto : lista.toArray()) {
+//			System.out.println(arrayObjeto.toString());
+//		}
+
+		for (String elemento : array) {
+			System.out.println("Elemento es: " + elemento);
+		}
+	}
 
 	public static void ejemploArrayListConIterator() {
 		System.out.println("---Estoy utilizando un arrayList con iterator---");
@@ -218,6 +237,73 @@ public class ArreglosSencillos {
 			// Y muestra la informacion que he recogido
 			System.out.println("Se llama " + informacion.getNombre() + " y tiene " + informacion.getEdad() + " anios");
 		}
+	}
+	
+	public static void primerLinkedList() {
+		LinkedList<String> listaEnlazada = new LinkedList<String>();
+		listaEnlazada.add("Primer elemento");
+		listaEnlazada.add("Segundo elemento");
+		listaEnlazada.add("Tercer elemento");
+		listaEnlazada.add("Cuarto elemento");
+
+		for (String elementos : listaEnlazada) {
+			System.out.println(elementos);
+		}
+	}
+	/*
+	 * Qué diferencia hay entre un vector y un arrayList
+	 * 
+	 * Es similar a un array, la diferencia estriba en que 
+	 * un vector crece automáticamente  cuando alcanza la 
+	 * dimesión inicial máxima.
+	 * 
+	 * De forma preterminada, Vector duplica  el tamaño de 
+	 * su matriz cuando aumenta su tamaño. Pero, ArrayList aumenta
+	 * a la mitad de su tamaño cuando aumenta su tamaño.
+	 * Por lo tanto, según la API de java, la única diferencia 
+	 * principal es que los métodos de Vector están sincronizados y los
+	 * métodos de ArrayList no están sincronizados
+	 */
+	//CapacidadVector = CapacidadVector *2
+	public static void primerVector() {
+			int inicioCapacidad = 1;
+			int capacidadIncrementada = 15;
+			System.out.println("---Primer ejemplo de vector estamos utilizando el bucle foreach y no representa la posición---");
+			Vector<Integer> vector = new Vector(inicioCapacidad, capacidadIncrementada);
+			vector.add(1);
+			vector.add(2);
+			vector.add(3);
+			
+//			vector.remove(1);
+			
+//			System.out.println("Datos del vector: "+vector);
+			
+			
+			for (int i : vector) {
+				System.out.println(i);
+			}
+			
+			
+			System.out.println("Vector primer ejemplo tamaño: "+vector.size()+" y capacidad: "+vector.capacity());
+			vector.trimToSize();
+			System.out.println("Vector primer ejemplo tamaño: "+vector.size()+" y capacidad: "+vector.capacity());
+			
+			System.out.println("---Este es el segundo ejemplo de vector y estamos utilizando el bucle for que si representa la posición---");
+			
+			Vector<Integer> vector2 = new Vector(inicioCapacidad, capacidadIncrementada);
+			vector2.add(1);
+			vector2.add(2);
+			vector2.add(4);
+			
+			for(int i =0; i<vector2.size(); i++) {
+		
+				System.out.println("Número de posicion: "+i+" y el resultado es: "+vector2.get(i));
+			}
+			
+			
+			boolean resultado = vector.equals(vector2);
+			
+			System.out.println("El vector de primer ejemplo es igual que el vector de segundo ejemplo?: "+resultado);
 	}
 
 }
