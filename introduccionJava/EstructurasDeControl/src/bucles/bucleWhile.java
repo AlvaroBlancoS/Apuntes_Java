@@ -89,5 +89,21 @@ public class bucleWhile {
 		}
 		return primo;
 	}
+	
+	public static void verificarLaClave() {
+		Scanner in = new Scanner(System.in);
+		String clave = "Juan";
+		String pass = null;
+
+		while (clave.equals(pass) == false) {
+			System.out.println("Introduzca la clave");
+			pass = in.next();
+			if (clave.equals(pass) == false) {
+				System.err.println("Clave incorrecta");
+			}
+		}
+
+		System.out.println("La clave correcta. Acceso permitido");
+	}	
 
 }
