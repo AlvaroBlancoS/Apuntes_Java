@@ -22,10 +22,8 @@ public class Test {
 		int aleatorio = ((int) (Math.random() * 100) + 1);
 		int premio = aleatorio;
 		boolean seguir = true;
-		int contador = 0;
 		do {
-			contador++;
-			intentos = contador;
+			intentos++;
 			num = Agregar.leerEntero("Introduzca un numero de 1 a 100");
 			try {
 				if ((premio > num) || (premio < num)) {
