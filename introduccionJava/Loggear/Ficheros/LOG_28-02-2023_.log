@@ -1,0 +1,5 @@
+En este momento está utilizando class logger_1.NumeroPar \ 28-02-2023_09:59:37  INFO : El usuario ha introducido el numero 6
+En este momento está utilizando class logger_1.NumeroPar \ 28-02-2023_09:59:37  WARNING : el 6 es par
+class logger_2.NumeroPrimo \ 28-02-2023_10:05:55  INFO : Es primo
+class logger_1.NumeroPar \ 28-02-2023_10:08:12  INFO : El usuario ha introducido el numero 1
+class logger_1.NumeroPar \ 28-02-2023_10:08:12  SEVERE : el 1 no es par

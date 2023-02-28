@@ -1,0 +1,6 @@
+feb 28, 2023 9:57:52 P. M. logger_0.MainLogger main
+INFO: Esto es un texto que da información
+feb 28, 2023 9:57:52 P. M. logger_0.MainLogger main
+WARNING: Esto es un texto que da advertencia
+feb 28, 2023 9:57:52 P. M. logger_0.MainLogger main
+SEVERE: Esto es un texto que da error o severo
