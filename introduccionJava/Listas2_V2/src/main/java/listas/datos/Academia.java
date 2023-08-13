@@ -71,7 +71,7 @@ public class Academia {
 	 * 
 	 * @param op
 	 */
-	public void verListaAlumnosYprofesoresDAM(String cursoNombre, int op) {
+	public void verListaAlumnosYprofesores(String cursoNombre, int op) {
 		boolean damAlumno = false;
 		boolean damProfesor = false;
 		boolean dawAlumno = false;
