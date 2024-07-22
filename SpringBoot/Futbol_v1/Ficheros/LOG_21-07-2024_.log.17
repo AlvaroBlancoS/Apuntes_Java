@@ -1,0 +1,2 @@
+class com.futbol.util.CustomExceptionHandler \ 21-07-2024_01:21:02  SEVERE : Estadio secreto ya existe ese nombre de equipo 400 BAD_REQUEST
+class com.futbol.util.CustomExceptionHandler \ 21-07-2024_01:21:06  SEVERE : Estadio secreto ya existe ese nombre de equipo 400 BAD_REQUEST

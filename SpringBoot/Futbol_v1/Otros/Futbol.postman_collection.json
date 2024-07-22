@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "b20f8c10-ded8-4067-86cc-3e7bb582243e",
+		"name": "Futbol",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24466306"
+	},
+	"item": [
+		{
+			"name": "BuscarEquipo_id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/equipos/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"equipos",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VerTodosEquipos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/equipos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"equipos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegistrarEquipos",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Real Sociedad\",\r\n    \"estadio\":\"Estadio Reale(Anoeta)\",\r\n    \"pais\": \"España\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/equipos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"equipos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VerSoloEstadios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/equipos/estadios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"equipos",
+						"estadios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TotalEstadios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/equipos/totalEstadios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"equipos",
+						"totalEstadios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modificarNombreEquipo",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Paris Saint-Germain Football Club\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/equipos/modificarNombre/Equipo A",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"equipos",
+						"modificarNombre",
+						"Equipo A"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CambiarPais",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pais\": \"España\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/equipos/cambiarPais/Real Sociedad",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"equipos",
+						"cambiarPais",
+						"Real Sociedad"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ModificarEstadio",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"estadio\": \"Cívitas Metropolitano\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/equipos/modificarEstadio/Club Atlético de Madrid",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"equipos",
+						"modificarEstadio",
+						"Club Atlético de Madrid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VerEstadiosPorPais",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/equipos/estadios/Francia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"equipos",
+						"estadios",
+						"Francia"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EquiposPorPais",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/equipos/verEquipos/Francia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"equipos",
+						"verEquipos",
+						"Francia"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/equipos/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"equipos",
+						"11"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,6 @@
+ver la documentación de API
+=> http://localhost:8080/v3/api-docs
+Ver desde el interfaz
+=> http://localhost:8080/swagger-ui/index.html
+En la carpeta de Ficheros es el lugar donde se va generando un fichero historial
+utilizando un logger cuando hay errores.

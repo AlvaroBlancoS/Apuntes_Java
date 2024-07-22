@@ -1,0 +1,7 @@
+class com.futbol.util.CustomExceptionHandler \ 21-07-2024_01:12:08  SEVERE : Estadio secreto ya existe ese nombre de equipo 400 BAD_REQUEST
+class com.futbol.util.CustomExceptionHandler \ 21-07-2024_01:12:30  SEVERE : Estadio secreto ya existe ese nombre de equipo 400 BAD_REQUEST
+class com.futbol.util.CustomExceptionHandler \ 21-07-2024_01:12:33  SEVERE : Estadio secreto ya existe ese nombre de equipo 400 BAD_REQUEST
+class com.futbol.util.CustomExceptionHandler \ 21-07-2024_01:12:43  SEVERE : Otro Estadio ya existe ese nombre de equipo 400 BAD_REQUEST
+class com.futbol.util.CustomExceptionHandler \ 21-07-2024_01:20:34  SEVERE : Estadio secreto ya existe ese nombre de equipo 400 BAD_REQUEST
+class com.futbol.util.CustomExceptionHandler \ 21-07-2024_01:21:02  SEVERE : Estadio secreto ya existe ese nombre de equipo 400 BAD_REQUEST
+class com.futbol.util.CustomExceptionHandler \ 21-07-2024_01:21:06  SEVERE : Estadio secreto ya existe ese nombre de equipo 400 BAD_REQUEST

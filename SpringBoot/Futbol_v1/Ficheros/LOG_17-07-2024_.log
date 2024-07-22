@@ -1,0 +1,10 @@
+class com.futbol.util.CustomExceptionHandler \ 17-07-2024_04:33:19  SEVERE : No se encuentra el equipo 404 NOT_FOUND
+class com.futbol.util.CustomExceptionHandler \ 17-07-2024_04:49:46  SEVERE : No se encuentra el equipo 404 NOT_FOUND
+class com.futbol.util.CustomExceptionHandler \ 17-07-2024_07:16:23  SEVERE : Error interno del servidor:Request method 'POST' is not supported (404 NOT_FOUND)
+class com.futbol.util.CustomExceptionHandler \ 17-07-2024_07:19:16  SEVERE : Error interno del servidor:No static resource api/equipos. (404 NOT_FOUND)
+class com.futbol.util.CustomExceptionHandler \ 17-07-2024_07:23:23  SEVERE : Error interno del servidor:El nombre del equipo ya está registrada (404 NOT_FOUND)
+class com.futbol.util.CustomExceptionHandler \ 17-07-2024_07:39:50  SEVERE : Error interno del servidor:El nombre del equipo ya está registrada (404 NOT_FOUND)
+class com.futbol.util.CustomExceptionHandler \ 17-07-2024_07:52:10  SEVERE : Error interno del servidor:El nombre del equipo ya está registrada 409 CONFLICT (404 NOT_FOUND)
+class com.futbol.util.CustomExceptionHandler \ 17-07-2024_07:53:20  SEVERE : Error interno del servidor:Un estadio no puede tener dos o mas equipos 409 CONFLICT (404 NOT_FOUND)
+class com.futbol.util.CustomExceptionHandler \ 17-07-2024_08:23:31  SEVERE : Error interno del servidor:Un estadio no puede tener dos o mas equipos 409 CONFLICT (500 INTERNAL_SERVER_ERROR)
+class com.futbol.util.CustomExceptionHandler \ 17-07-2024_08:54:20  SEVERE : Error interno del servidor:could not execute statement [Column 'estadio' cannot be null] [update equipos set estadio=?,nombre=?,pais=? where idequipo=?]; SQL [update equipos set estadio=?,nombre=?,pais=? where idequipo=?]; constraint [null] (500 INTERNAL_SERVER_ERROR)

@@ -1,0 +1,2 @@
+class com.futbol.util.CustomExceptionHandler \ 22-07-2024_08:06:59  SEVERE : Real Sociedad ya existe ese nombre de equipo 400 BAD_REQUEST
+class com.futbol.util.CustomExceptionHandler \ 22-07-2024_08:07:10  SEVERE : Estadio Reale(Anoeta) existe y no se puede agregar dos o mas equipos de un estadio 400 BAD_REQUEST

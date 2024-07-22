@@ -1,0 +1,5 @@
+class com.futbol.util.CustomExceptionHandler \ 19-07-2024_01:14:38  SEVERE : Error interno del servidor:El estadio Parc des Princes existe y no puede tener dos o más equipos (500 INTERNAL_SERVER_ERROR)
+class com.futbol.util.CustomExceptionHandler \ 19-07-2024_01:16:28  SEVERE : El estadio Parc des Princes existe y no puede tener dos o más equipos 404 NOT_FOUND
+class com.futbol.util.CustomExceptionHandler \ 19-07-2024_01:19:16  SEVERE : El estadio Parc des Princes existe y no puede tener dos o más equipos 404 NOT_FOUND
+class com.futbol.util.CustomExceptionHandler \ 19-07-2024_01:19:34  SEVERE : 10 id equipo no existe 404 NOT_FOUND
+class com.futbol.util.CustomExceptionHandler \ 19-07-2024_01:25:29  SEVERE : AlvaroLandia no existe o no aparece en la lista 404 NOT_FOUND
