@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.futbol.model.Equipo;
 import com.futbol.repository.EquipoRepository;
+import com.futbol.util.EquipoBadRequest;
 import com.futbol.util.EquipoNotFoundException;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,8 +46,8 @@ public class EquipoService {
 	}
 
 	/**
-	 * Es mas corto y sencillo
-	 * Lo descubri por experiencia... maravilloso
+	 * Es mas corto y sencillo Lo descubri por experiencia... maravilloso
+	 * 
 	 * @param pais
 	 * @return
 	 */
@@ -85,7 +86,7 @@ public class EquipoService {
 
 		return false;
 	}
-	
+
 	public boolean buscarEstadioExistente_v2(String estadio) {
 		List<Equipo> equipos = equipoRepository.findByEstadio(estadio);
 		for (Equipo e : equipos) {
@@ -95,22 +96,23 @@ public class EquipoService {
 		}
 		return false;
 	}
-	
-    public boolean buscarEstadioExistente(String estadio) {
-        return equipoRepository.existsByEstadio(estadio);
-    } 
+
+	public boolean buscarEstadioExistente(String estadio) {
+		return equipoRepository.existsByEstadio(estadio);
+	}
 
 	public void eliminarEquipo(int id) {
 		equipoRepository.deleteById(id);
 	}
-	
+
 	public Equipo actualizarEquipo(int id, Equipo equipoActualizado) {
 		Optional<Equipo> optionalEquipo = equipoRepository.findById(id);
 		String estadio = equipoActualizado.getEstadio();
 		boolean verificarEstadio = equipoRepository.existsByEstadio(estadio);
 		if (optionalEquipo.isPresent()) {
 			if (verificarEstadio) {
-				throw new EquipoNotFoundException("El estadio " + estadio + " existe y no puede tener dos o más equipos");
+				throw new EquipoNotFoundException(
+						"El estadio " + estadio + " existe y no puede tener dos o más equipos");
 			}
 			Equipo equipoExistente = optionalEquipo.get();
 			equipoExistente.setNombre(equipoActualizado.getNombre());
@@ -151,22 +153,52 @@ public class EquipoService {
 
 	}
 
-	public Equipo modificarNombre(String nombreOriginal, Equipo equipoActualizado) {
-		Optional<Equipo> optionalEquipo = equipoRepository.findByNombre(nombreOriginal);
-		String nombreModificado = equipoActualizado.getNombre();
-		if (optionalEquipo.isPresent()) {
-			Equipo equipoExistente = optionalEquipo.get();
-			equipoExistente.setNombre(nombreModificado);
-			return equipoRepository.save(equipoExistente);
-		} else {
-			throw new EquipoNotFoundException(nombreOriginal + " no existe");
+	public Equipo modificarNombreEquipo_id(int id, Equipo equipoActualizado) {
+		Optional<Equipo> buscarID = equipoRepository.findById(id);
+		if (!buscarID.isPresent()) {
+			throw new EquipoNotFoundException(id + " no aparece en la lista");
 		}
+		Equipo equipoExistente = buscarID.get();
+		String nombreModificado = equipoActualizado.getNombre();
+		// Buscar el nuevo nombre ya esta en la lista
+		if (equipoRepository.findByNombre(nombreModificado).isPresent()) {
+			throw new EquipoNotFoundException(nombreModificado + " ya existe ese equipo");
+		}
+
+		equipoExistente.setNombre(nombreModificado);
+		return equipoRepository.save(equipoExistente);
+	}
+
+	public Equipo modificarNombreEquipo_nombre(String nombreOriginal, Equipo equipoActualizado) {
+		// Buscar nombre original
+		Optional<Equipo> buscarNombreOriginal = equipoRepository.findByNombre(nombreOriginal);
+		if (!buscarNombreOriginal.isPresent()) {
+			throw new EquipoNotFoundException(nombreOriginal + " no aparece en la lista");
+		}
+
+		// Rara vez, averiguando si hay nombres duplicados en la base de datos
+		Integer nd = equipoRepository.nombreDuplicado();
+		if (nd != null && nd > 0) {
+			throw new EquipoBadRequest("Hay nombres duplicados en la base de datos");
+		}
+
+		Equipo equipoExistente = buscarNombreOriginal.get();
+		String nombreModificado = equipoActualizado.getNombre();
+
+		// Buscar el nuevo nombre ya esta en la lista
+		if (!nombreOriginal.equals(nombreModificado) && equipoRepository.findByNombre(nombreModificado).isPresent()) {
+			throw new EquipoNotFoundException(nombreModificado + " ya existe ese equipo");
+		}
+
+		equipoExistente.setNombre(nombreModificado);
+		return equipoRepository.save(equipoExistente);
+
 	}
 
 	public Optional<Equipo> buscarPorNombre(String nombre) {
 		return equipoRepository.findByNombre(nombre);
 	}
-	
+
 	public List<String> listarEstadios() {
 		return equipoRepository.seeOnlyEstadios();
 	}

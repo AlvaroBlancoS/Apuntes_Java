@@ -199,7 +199,19 @@ public class EquipoController {
 			@ApiResponse(responseCode = "404", description = "Equipo no encontrado", content = @Content) })
 	public ResponseEntity<Equipo> modificarNombre(@Valid @PathVariable("nombreOriginal") String nombreOriginal,
 			@RequestBody Equipo nombreCambiado) {
-		Equipo editarNombre = equipoService.modificarNombre(nombreOriginal, nombreCambiado);
+		Equipo editarNombre = equipoService.modificarNombreEquipo_nombre(nombreOriginal, nombreCambiado);
+		return ResponseEntity.ok(editarNombre);
+	}
+	@Operation(summary = "Modificar nombre del equipo por ID", description = "Modifica el nombre de un equipo dado su ID Equipo", tags = {
+	"equipo" })
+@ApiResponses(value = {
+	@ApiResponse(responseCode = "200", description = "Nombre modificado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(implementation = Equipo.class)) }),
+	@ApiResponse(responseCode = "404", description = "ID Equipo no encontrado", content = @Content) })
+	@PutMapping("/modificarNombreID/{id}")
+	public ResponseEntity<Equipo> modificarNombreEquipo_id(@Valid @PathVariable("id") int id,
+			@RequestBody Equipo nombreCambiado) {
+		Equipo editarNombre = equipoService.modificarNombreEquipo_id(id, nombreCambiado);
 		return ResponseEntity.ok(editarNombre);
 	}
 

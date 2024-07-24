@@ -37,7 +37,7 @@ CREATE TABLE `equipos` (
 
 LOCK TABLES `equipos` WRITE;
 /*!40000 ALTER TABLE `equipos` DISABLE KEYS */;
-INSERT INTO `equipos` VALUES (1,'Real Madrid','Santiago de Bernabeu','España'),(2,'Barcelona C.F','Camp Nou','España'),(3,'Paris Saint-Germain Football Club','Parc des Princes','Francia'),(4,'Olympique de Lyon','Parc Olympique Lyonnais','Francia'),(5,'Club Atlético de Madrid','Cívitas Metropolitano','España'),(6,'Manchester United','Old Trafford','Reino Unido'),(7,' Chelsea','Stamford Bridge','Reino Unido'),(8,' Bayern','Allianz Arena','Alemania'),(9,'Borussia Dortmund','Signal Iduna Park','Alemania'),(10,'Equipo A','Estadio secreto','Estados Unidos de América'),(12,'Real Sociedad','Estadio Reale(Anoeta)','España');
+INSERT INTO `equipos` VALUES (1,'Real Madrid FC','Santiago de Bernabeu','España'),(2,'Barcelona C.F','Camp Nou','España'),(3,'Paris Saint-Germain Football Club','Parc des Princes','Francia'),(4,'Olympique de Lyon','Parc Olympique Lyonnais','Francia'),(5,'Club Atlético de Madrid','Cívitas Metropolitano','España'),(6,'Manchester United','Old Trafford','Reino Unido'),(7,' Chelsea','Stamford Bridge','Reino Unido'),(8,' Bayern','Allianz Arena','Alemania'),(9,'Borussia Dortmund','Signal Iduna Park','Alemania'),(10,'Una pandilla de renacuajos','Estadio secreto','Estados Unidos de América'),(12,'Real Sociedad','Estadio Reale(Anoeta)','España');
 /*!40000 ALTER TABLE `equipos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,4 +81,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-22  8:17:40
+-- Dump completed on 2024-07-24 17:55:26
