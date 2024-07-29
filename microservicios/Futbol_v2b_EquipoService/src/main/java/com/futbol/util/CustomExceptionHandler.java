@@ -1,0 +1,32 @@
+package com.futbol.util;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class CustomExceptionHandler {
+	MiLogger log = new MiLogger(CustomExceptionHandler.class.toString(), true);
+
+	// ----------- EXCEPTIONES DE EQUIPO -----------
+	@ExceptionHandler(EquipoNotFoundException.class)
+	public ResponseEntity<String> handleEquipoNotFoundException(EquipoNotFoundException ex) {
+		log.logError(ex.getMessage() + " " + HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(EquipoBadRequest.class)
+	public ResponseEntity<String> handleEquipoBadResquestException(EquipoBadRequest ex) {
+		log.logError(ex.getMessage() + " " + HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	// ----------- OTROS -----------
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<String> handleGeneralException(Exception ex) {
+		log.logError("Error interno del servidor:" + ex.getMessage() + " (" + HttpStatus.INTERNAL_SERVER_ERROR + ")");
+		return new ResponseEntity<>(
+				"Error interno del servidor: " + ex.getMessage() + " (" + HttpStatus.INTERNAL_SERVER_ERROR + ")",
+				HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+}
