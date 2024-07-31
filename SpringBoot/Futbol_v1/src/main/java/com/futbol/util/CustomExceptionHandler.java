@@ -1,5 +1,4 @@
 package com.futbol.util;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,7 +24,7 @@ public class CustomExceptionHandler {
 	// ----------- EXCEPTIONES DE JUGADOR -----------
 	@ExceptionHandler(JugadorNotFoundException.class)
 	public ResponseEntity<String> handleJugadorNotFoundException(JugadorNotFoundException ex) {
-		log.logError("No se encuentra el jugador " + HttpStatus.NOT_FOUND);
+		log.logError(ex.getMessage()+" " + HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
 	}
 

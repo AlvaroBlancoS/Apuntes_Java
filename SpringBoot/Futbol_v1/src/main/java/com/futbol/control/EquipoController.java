@@ -37,11 +37,10 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/equipos")
 @Tag(name = "Equipo", description = "Equipo API")
 public class EquipoController {
-
+	@Autowired
 	private final EquipoService equipoService;
 	private final ReciclajeIDService reciclar;
 
-	@Autowired
 	public EquipoController(EquipoService equipoService, ReciclajeIDService reciclar) {
 		this.equipoService = equipoService;
 		this.reciclar = reciclar;
@@ -67,8 +66,8 @@ public class EquipoController {
 			throw new EquipoBadRequest(estadio + " existe y no se puede agregar dos o mas equipos de un estadio");
 		}
 
-		//No funciona de momento
-		Long reciclarID = reciclar.getReciclarID();
+		// No funciona de momento
+		Integer reciclarID = reciclar.getReciclarID();
 		if (reciclarID != null) {
 			equipo.setIdequipo(reciclarID);
 		}
@@ -78,6 +77,7 @@ public class EquipoController {
 
 	}
 
+	// ----------------------------GET---------------------------
 	@GetMapping("/{id}")
 	@Operation(summary = "Obtener equipo por ID", description = "Devuelve un equipo dado su ID", tags = { "equipo" })
 	@ApiResponses(value = {
@@ -93,6 +93,25 @@ public class EquipoController {
 			throw new EquipoNotFoundException("Equipo no encontrado con id: " + id);
 		}
 		// equipo.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+	}
+
+	@GetMapping("verSoloID/{nombreEquipo}")
+	public ResponseEntity<Integer> obtenerIDequipoPorNombre(@PathVariable("nombreEquipo") String nombreEquipo) {
+		Optional<Integer> buscarNombreEquipo = equipoService.buscarIDPorNombre(nombreEquipo);
+		if (buscarNombreEquipo.isPresent()) {
+			return new ResponseEntity<>(buscarNombreEquipo.get(), HttpStatus.OK);
+		} else {
+			throw new EquipoNotFoundException("No se encuentra nombre de equipo: " + nombreEquipo);
+		}
+	}
+
+	public ResponseEntity<Integer> obtenerIDequipoPorNombrev2(@PathVariable("nombreEquipo") String nombreEquipo) {
+		Optional<Equipo> buscarNombreEquipo = equipoService.buscarPorNombre(nombreEquipo);
+		if (buscarNombreEquipo.isPresent()) {
+			return new ResponseEntity<>(buscarNombreEquipo.get().getIdequipo(), HttpStatus.OK);
+		} else {
+			throw new EquipoNotFoundException("No se encuentra nombre de equipo: " + nombreEquipo);
+		}
 	}
 
 	@GetMapping("/nombreEquipo/{nombre}")
@@ -151,7 +170,7 @@ public class EquipoController {
 		}
 		return ResponseEntity.ok(estadios);
 	}
-
+	// ----------------------------------PUT-------------------
 	@PutMapping("/{id}")
 	@Operation(summary = "Actualizar equipo", description = "Actualiza un equipo dado su ID", tags = { "equipo" })
 	@ApiResponses(value = {
@@ -202,12 +221,13 @@ public class EquipoController {
 		Equipo editarNombre = equipoService.modificarNombreEquipo_nombre(nombreOriginal, nombreCambiado);
 		return ResponseEntity.ok(editarNombre);
 	}
+
 	@Operation(summary = "Modificar nombre del equipo por ID", description = "Modifica el nombre de un equipo dado su ID Equipo", tags = {
-	"equipo" })
-@ApiResponses(value = {
-	@ApiResponse(responseCode = "200", description = "Nombre modificado", content = {
-			@Content(mediaType = "application/json", schema = @Schema(implementation = Equipo.class)) }),
-	@ApiResponse(responseCode = "404", description = "ID Equipo no encontrado", content = @Content) })
+			"equipo" })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Nombre modificado", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Equipo.class)) }),
+			@ApiResponse(responseCode = "404", description = "ID Equipo no encontrado", content = @Content) })
 	@PutMapping("/modificarNombreID/{id}")
 	public ResponseEntity<Equipo> modificarNombreEquipo_id(@Valid @PathVariable("id") int id,
 			@RequestBody Equipo nombreCambiado) {
@@ -248,28 +268,6 @@ public class EquipoController {
 	public ResponseEntity<Integer> contarEstadios() {
 		int totalEstadios = equipoService.contarEstadios();
 		return ResponseEntity.ok(totalEstadios);
-	}
-
-	/**
-	 * 
-	 * El metodo handleValidationExceptions con la anotacion @ExceptionHandler es un
-	 * manejador de excepciones que captura y maneja las excepciones de validacion
-	 * de argumentos no validos. Este manejador es especialmente util cuando
-	 * utilizas anotaciones de validacion como @NotEmpty, @NotNull, @Size, etc., en
-	 * tus clases de modelo.
-	 * 
-	 * @param ex
-	 * @return
-	 */
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-		Map<String, String> errors = new HashMap<>();
-		ex.getBindingResult().getAllErrors().forEach((error) -> {
-			String fieldName = ((FieldError) error).getField();
-			String errorMessage = error.getDefaultMessage();
-			errors.put(fieldName, errorMessage);
-		});
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
 	}
 
 	/**

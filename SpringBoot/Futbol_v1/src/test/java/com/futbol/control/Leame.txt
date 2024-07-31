@@ -1,0 +1,18 @@
+1- Uso de @BeforeAll y @BeforeEach
+_____________________________________
+---@BeforeAll se ejecuta una sola vez antes de todos los tests y se usa generalmente para configuraciones 
+que son costosas o que se deben hacer una sola vez (como inicializar una base de datos en memoria). Debe 
+ser un método estático o estar en una clase de prueba con un ciclo de vida de clase 
+(@TestInstance(TestInstance.Lifecycle.PER_CLASS)).
+
+---@BeforeEach se ejecuta antes de cada prueba individual y se usa para configurar el estado necesario para 
+cada prueba.
+
+2- Inicialización de Mockito
+____________________________________
+MockitoAnnotations.openMocks(this); se usa para inicializar los mocks antes de cada prueba. Es mejor mover esto 
+a @BeforeEach para asegurarse de que los mocks se reinicializan antes de cada prueba.
+
+3- Inyección de Dependencias
+_____________________________________
+@InjectMocks se usa para inyectar los mocks en la instancia de la clase que está siendo probada.

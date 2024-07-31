@@ -21,5 +21,6 @@ public interface EquipoRepository extends JpaRepository<Equipo, Integer> {
     int countEstadios();
     @Query("SELECT COUNT(e.nombre) FROM Equipo e GROUP BY e.nombre HAVING COUNT(e.nombre) > 1")
     Integer nombreDuplicado();//Rara vez, averiguando si hay nombres duplicados en la base de datos   
-    
+    @Query("SELECT e.idequipo FROM Equipo e WHERE e.nombre = :nombre")
+    Optional<Integer> findIdByNombre(String nombre);
 }

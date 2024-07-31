@@ -7,307 +7,581 @@
 	},
 	"item": [
 		{
-			"name": "BuscarEquipo_id",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Equipos",
+			"item": [
+				{
+					"name": "BuscarEquipo_id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/equipos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"equipos",
+								"1"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/equipos/10",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"equipos",
-						"10"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "VerTodosEquipos",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "VerTodosEquipos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/equipos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"equipos"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/equipos",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"equipos"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "RegistrarEquipos",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nombre\": \"Real Sociedad\",\r\n    \"estadio\":\"Estadio Reale(Anoeta)\",\r\n    \"pais\": \"España\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "RegistrarEquipos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"\",\r\n    \"estadio\":\"\",\r\n    \"pais\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/equipos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"equipos"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/equipos",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"equipos"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "VerSoloEstadios",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/api/equipos/estadios",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"equipos",
-						"estadios"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "TotalEstadios",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/api/equipos/totalEstadios",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"equipos",
-						"totalEstadios"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "modificarNombreEquipo",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nombre\": \"Paris Saint-Germain Football Club\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "VerSoloEstadios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/equipos/estadios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"equipos",
+								"estadios"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/equipos/modificarNombre/Equipo A",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"equipos",
-						"modificarNombre",
-						"Equipo A"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CambiarPais",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"pais\": \"España\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "TotalEstadios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/equipos/totalEstadios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"equipos",
+								"totalEstadios"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/equipos/cambiarPais/Real Sociedad",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"equipos",
-						"cambiarPais",
-						"Real Sociedad"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "ModificarEstadio",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"estadio\": \"Cívitas Metropolitano\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "modificarNombreEquipo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Bayern\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/equipos/modificarNombre/ Bayern",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"equipos",
+								"modificarNombre",
+								" Bayern"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/equipos/modificarEstadio/Club Atlético de Madrid",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"equipos",
-						"modificarEstadio",
-						"Club Atlético de Madrid"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "VerEstadiosPorPais",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/api/equipos/estadios/Francia",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"equipos",
-						"estadios",
-						"Francia"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "EquiposPorPais",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/api/equipos/verEquipos/Francia",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"equipos",
-						"verEquipos",
-						"Francia"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Eliminar",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "CambiarPais",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pais\": \"España\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/equipos/cambiarPais/Real Sociedad",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"equipos",
+								"cambiarPais",
+								"Real Sociedad"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/equipos/11",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"equipos",
-						"11"
-					]
+				{
+					"name": "ModificarEstadio",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"estadio\": \"Cívitas Metropolitano\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/equipos/modificarEstadio/Club Atlético de Madrid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"equipos",
+								"modificarEstadio",
+								"Club Atlético de Madrid"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "VerEstadiosPorPais",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/equipos/estadios/Francia",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"equipos",
+								"estadios",
+								"Francia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EquiposPorPais",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/equipos/verEquipos/Francia",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"equipos",
+								"verEquipos",
+								"Francia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/equipos/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"equipos",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verSoloIDEquipoPorNombre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/equipos/verSoloID/Bayern",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"equipos",
+								"verSoloID",
+								"Bayern"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "Jugadores",
+			"item": [
+				{
+					"name": "RegistrarJugador_original",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Horațiu\",\r\n    \"primerapellido\": \"Moldovan\",\r\n    \"segundoapellido\": \"\",\r\n    \"edad\":26,\r\n    \"posicion\":\"Portero\",\r\n    \"document\": \"Z6967196H\",\r\n        \"idequipo\": {\r\n        \"idequipo\": 5\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/jugadores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"jugadores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "VerTodosJugadores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/jugadores/verTodosJugadores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"jugadores",
+								"verTodosJugadores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BuscarJugadorPorID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/jugadores/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"jugadores",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegistrarJugadorConEquipo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Daniel\",\r\n    \"primerapellido\": \"Carvajal\",\r\n    \"segundoapellido\": \"Ramos\",\r\n    \"edad\": 32,\r\n    \"posicion\": \"Defensa\",\r\n    \"document\": \"23533679X\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/jugadores?nombreEquipo=Real Madrid FC",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"jugadores"
+							],
+							"query": [
+								{
+									"key": "nombreEquipo",
+									"value": "Real Madrid FC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegistrarJugadorSinEquipo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Lionel Andrés\",\r\n    \"primerapellido\": \"Messi\",\r\n    \"segundoapellido\": \"Cuccitini\",\r\n    \"edad\":37,\r\n    \"posicion\":\"Delantero\",\r\n    \"document\": \"Z9770067V\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/jugadores/agregarJugadorSinEquipo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"jugadores",
+								"agregarJugadorSinEquipo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BuscarJugadorPorDocument",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/jugadores/document/51888845V",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"jugadores",
+								"document",
+								"51888845V"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CambiarEdad",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"edad\":18\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/jugadores/cambiarEdad/81956647B",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"jugadores",
+								"cambiarEdad",
+								"81956647B"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "VerJugadoresPorNombre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/jugadores/verJugadoresPorNombre/Horațiu",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"jugadores",
+								"verJugadoresPorNombre",
+								"Horațiu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CambiarEdadV2_corregir",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"edad\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/jugadores/cambiarEdad2/81956647B",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"jugadores",
+								"cambiarEdad2",
+								"81956647B"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ReciclajeIDService {
-	private PriorityQueue<Long> reciclarID = new PriorityQueue<>();
+	private PriorityQueue<Integer> reciclarID = new PriorityQueue<>();
 
-	public void agregarIDantiguo(Long id) {
+	public void agregarIDantiguo(Integer id) {
 		reciclarID.add(id);
 	}
 
-	public Long getReciclarID() {
+	public Integer getReciclarID() {
 		return reciclarID.isEmpty() ? null : reciclarID.poll();
 	}
 }

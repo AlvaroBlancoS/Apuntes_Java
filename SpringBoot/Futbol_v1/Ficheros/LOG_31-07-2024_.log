@@ -1,0 +1,3 @@
+class com.futbol.util.CustomExceptionHandler \ 31-07-2024_08:08:24  SEVERE : Error interno del servidor:Required request parameter 'edad' for method parameter type Integer is not present (500 INTERNAL_SERVER_ERROR)
+class com.futbol.util.CustomExceptionHandler \ 31-07-2024_08:13:03  SEVERE : Error interno del servidor:Required request parameter 'document' for method parameter type String is not present (500 INTERNAL_SERVER_ERROR)
+class com.futbol.util.CustomExceptionHandler \ 31-07-2024_08:13:38  SEVERE : Error interno del servidor:Required request parameter 'edad' for method parameter type Integer is not present (500 INTERNAL_SERVER_ERROR)

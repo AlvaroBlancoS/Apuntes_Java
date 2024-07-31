@@ -37,7 +37,7 @@ CREATE TABLE `equipos` (
 
 LOCK TABLES `equipos` WRITE;
 /*!40000 ALTER TABLE `equipos` DISABLE KEYS */;
-INSERT INTO `equipos` VALUES (1,'Real Madrid FC','Santiago de Bernabeu','España'),(2,'Barcelona C.F','Camp Nou','España'),(3,'Paris Saint-Germain Football Club','Parc des Princes','Francia'),(4,'Olympique de Lyon','Parc Olympique Lyonnais','Francia'),(5,'Club Atlético de Madrid','Cívitas Metropolitano','España'),(6,'Manchester United','Old Trafford','Reino Unido'),(7,' Chelsea','Stamford Bridge','Reino Unido'),(8,' Bayern','Allianz Arena','Alemania'),(9,'Borussia Dortmund','Signal Iduna Park','Alemania'),(10,'Una pandilla de renacuajos','Estadio secreto','Estados Unidos de América'),(12,'Real Sociedad','Estadio Reale(Anoeta)','España');
+INSERT INTO `equipos` VALUES (1,'Real Madrid FC','Santiago de Bernabeu','España'),(2,'Barcelona C.F','Camp Nou','España'),(3,'Paris Saint-Germain Football Club','Parc des Princes','Francia'),(4,'Olympique de Lyon','Parc Olympique Lyonnais','Francia'),(5,'Club Atlético de Madrid','Cívitas Metropolitano','España'),(6,'Manchester United','Old Trafford','Reino Unido'),(7,' Chelsea','Stamford Bridge','Reino Unido'),(8,'Bayern','Allianz Arena','Alemania'),(9,'Borussia Dortmund','Signal Iduna Park','Alemania'),(10,'Una pandilla de renacuajos','Estadio secreto','Estados Unidos de América'),(12,'Real Sociedad','Estadio Reale(Anoeta)','España');
 /*!40000 ALTER TABLE `equipos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -49,17 +49,18 @@ DROP TABLE IF EXISTS `jugadores`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `jugadores` (
-  `idjugador` int NOT NULL AUTO_INCREMENT,
-  `idequipo` int NOT NULL,
+  `idjugador` bigint NOT NULL AUTO_INCREMENT,
+  `idequipo` int DEFAULT NULL,
   `nombre` varchar(255) NOT NULL,
   `primerapellido` varchar(255) NOT NULL,
   `segundoapellido` varchar(255) DEFAULT NULL,
   `edad` int NOT NULL,
   `posicion` varchar(255) DEFAULT NULL,
+  `document` varchar(20) NOT NULL,
   PRIMARY KEY (`idjugador`),
   KEY `FK_equipo_jugador` (`idequipo`),
   CONSTRAINT `FK_equipo_jugador` FOREIGN KEY (`idequipo`) REFERENCES `equipos` (`idequipo`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +69,7 @@ CREATE TABLE `jugadores` (
 
 LOCK TABLES `jugadores` WRITE;
 /*!40000 ALTER TABLE `jugadores` DISABLE KEYS */;
-INSERT INTO `jugadores` VALUES (1,1,'Alvarito','Perez','Dominguez',35,'CentroCampista');
+INSERT INTO `jugadores` VALUES (1,1,'Alvarito','Perez','Dominguez',18,'CentroCampista','81956647B'),(2,1,'Marcos','Llorente','',29,'CentroCampista','51888845V'),(3,5,'Horațiu','Moldovan','',26,'Portero','Z6967196H'),(4,5,'Antoine','Griezmann','',32,'Delantero','Z4079155H'),(5,1,'Daniel','Carvajal','Ramos',32,'Defensa','09205535S'),(6,NULL,'Horațiu','Moldovan','',26,'Portero','Y3268254Z'),(7,NULL,'Lionel Andrés','Messi','Cuccitini',37,'Delantero','Z9770067V');
 /*!40000 ALTER TABLE `jugadores` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -81,4 +82,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-24 17:55:26
+-- Dump completed on 2024-07-31 20:21:37

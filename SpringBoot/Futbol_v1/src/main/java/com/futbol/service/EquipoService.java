@@ -70,7 +70,16 @@ public class EquipoService {
 		}
 		return almacenar;
 	}
-
+/*	
+	public Optional<String>buscarNombreEquiposPorID(String nombre){
+		Optional<Equipo>buscarNombreEquipo = equipoRepository.findByNombre(nombre);
+		if (buscarNombreEquipo.isPresent()) {
+				return buscarNombreEquipo.
+		}
+		
+		return null;
+	}
+*/
 	public List<String> listaDePaisesExistentes() {
 		List<Equipo> equipos = new ArrayList<>();
 		return equipos.stream().map(Equipo::getPais).collect(Collectors.toList());
@@ -197,6 +206,10 @@ public class EquipoService {
 
 	public Optional<Equipo> buscarPorNombre(String nombre) {
 		return equipoRepository.findByNombre(nombre);
+	}
+	
+	public Optional<Integer>buscarIDPorNombre(String nombre ){
+		return equipoRepository.findIdByNombre(nombre);
 	}
 
 	public List<String> listarEstadios() {
