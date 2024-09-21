@@ -10,37 +10,167 @@
 			"name": "Equipos",
 			"item": [
 				{
-					"name": "BuscarEquipo_id",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "buscarEquipoPor",
+					"item": [
+						{
+							"name": "porId",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/equipos/8",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"equipos",
+										"8"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://localhost:8080/api/equipos/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"equipos",
-								"1"
-							]
+						{
+							"name": "EquiposPorPais",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/equipos/verEquipos/Francia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"equipos",
+										"verEquipos",
+										"Francia"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
+				},
+				{
+					"name": "Estadios",
+					"item": [
+						{
+							"name": "VerSoloEstadios",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/equipos/estadios",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"equipos",
+										"estadios"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "VerEstadiosPorPais",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/equipos/estadios/Francia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"equipos",
+										"estadios",
+										"Francia"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TotalEstadios",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/equipos/totalEstadios",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"equipos",
+										"totalEstadios"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "RegistrarEquipo",
+					"item": [
+						{
+							"name": "RegistrarEquipos",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"\",\r\n    \"estadio\":\"\",\r\n    \"pais\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/equipos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"equipos"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "VerTodosEquipos",
@@ -69,77 +199,6 @@
 							"path": [
 								"api",
 								"equipos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "RegistrarEquipos",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"\",\r\n    \"estadio\":\"\",\r\n    \"pais\": \"\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/equipos",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"equipos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "VerSoloEstadios",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/equipos/estadios",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"equipos",
-								"estadios"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "TotalEstadios",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/equipos/totalEstadios",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"equipos",
-								"totalEstadios"
 							]
 						}
 					},
@@ -239,50 +298,6 @@
 					"response": []
 				},
 				{
-					"name": "VerEstadiosPorPais",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/equipos/estadios/Francia",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"equipos",
-								"estadios",
-								"Francia"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "EquiposPorPais",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/equipos/verEquipos/Francia",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"equipos",
-								"verEquipos",
-								"Francia"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Eliminar",
 					"request": {
 						"method": "DELETE",
@@ -340,33 +355,438 @@
 			"name": "Jugadores",
 			"item": [
 				{
-					"name": "RegistrarJugador_original",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"nombre\":\"Horațiu\",\r\n    \"primerapellido\": \"Moldovan\",\r\n    \"segundoapellido\": \"\",\r\n    \"edad\":26,\r\n    \"posicion\":\"Portero\",\r\n    \"document\": \"Z6967196H\",\r\n        \"idequipo\": {\r\n        \"idequipo\": 5\r\n    }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "RegistrarJugador",
+					"item": [
+						{
+							"name": "RegistrarJugador_original",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\":\"Horațiu\",\r\n    \"primerapellido\": \"Moldovan\",\r\n    \"segundoapellido\": \"\",\r\n    \"edad\":26,\r\n    \"posicion\":\"Portero\",\r\n    \"document\": \"Z6967196H\",\r\n        \"idequipo\": {\r\n        \"idequipo\": 5\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://localhost:8080/api/jugadores",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"jugadores"
-							]
+						{
+							"name": "conEquipo",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Daniel\",\r\n    \"primerapellido\": \"Carvajal\",\r\n    \"segundoapellido\": \"Ramos\",\r\n    \"edad\": 32,\r\n    \"posicion\": \"Defensa\",\r\n    \"document\": \"23533679X\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores?nombreEquipo=Real Madrid FC",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores"
+									],
+									"query": [
+										{
+											"key": "nombreEquipo",
+											"value": "Real Madrid FC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "sinEquipo",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\":\"Alvarito\",\r\n    \"primerapellido\": \"Blanquito\",\r\n    \"segundoapellido\": \"Santa gines\",\r\n    \"edad\":37,\r\n    \"posicion\":\"Delantero\",\r\n    \"document\": \"06190849P\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores/agregarJugadorSinEquipo",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores",
+										"agregarJugadorSinEquipo"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"description": "Aparecen tres opciones de **registrar Jugadores:**\n\n1. RegistrarJugador_original\n    \n2. Registrar_JugadorConEquipo\n    \n3. RegistrarJugadorSinEquipo"
+				},
+				{
+					"name": "Cambiar Edad",
+					"item": [
+						{
+							"name": "CambiarEdad",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"edad\":18\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores/cambiarEdad/81956647B",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores",
+										"cambiarEdad",
+										"81956647B"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CambiarEdadDTO_corregir",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"edad\": 37\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores/cambiarEdadDTO/Z9770067V",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores",
+										"cambiarEdadDTO",
+										"Z9770067V"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CambiarEdadV2_corregir",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"edad\":37\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores/cambiarEdad2/Z9770067V",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores",
+										"cambiarEdad2",
+										"Z9770067V"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "VincularYdesvincular",
+					"item": [
+						{
+							"name": "DesvincularEquipoV2",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores/desvincularEquipo/81956647B",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores",
+										"desvincularEquipo",
+										"81956647B"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "VincularEquipo",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombreEquipo\": \"Bayern\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores/vincularEquipo/81956647B",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores",
+										"vincularEquipo",
+										"81956647B"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Buscar jugadores por...",
+					"item": [
+						{
+							"name": "porNombre",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores/verJugadoresPorNombre/Robin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores",
+										"verJugadoresPorNombre",
+										"Robin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "porPosicionConOsinEquipos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores/posicionJugadores/delantero",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores",
+										"posicionJugadores",
+										"delantero"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "porOposicionConEquipos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores/verJugadoresConEquipos/Defensa",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores",
+										"verJugadoresConEquipos",
+										"Defensa"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PorPosicionString",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores/posicionJugadoresString/defensa",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores",
+										"posicionJugadoresString",
+										"defensa"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "He creado las tres opciones de **buscar jugadores.** La primera opcion que hice es:\n\n- **BuscarJugadoresPorPosicion**: En **repositorio** hay dos opciones a la hora de consultar:\n    \n    - La primer opción es consultar jugadores con una lista sin necesidad de realizar una Query. Y el método se llama **findByPosicion**\n        \n    - La segunda opción es consultar pero esta vez con la Query y el método es **listarJugadoresPorPosicion**\n        \n\nEstas son dos opciones que puedes elegir que quieras y puedes manejar en la clase **JugadorService** y encontrarás el método **verJugadoresPorPosicion.**\n\n- **verJugadoresPorNombre:** Esto ha sido un poco complejo porque quería averiguar no solo la _entidad_ o _DTO_ sino también el _mapeo y en clase_ _**JugadorService**_ _se encuentra los cuatros metodos posibles que se puede utilizar:_\n    \n    - **BuscarJugadoresPorNombre** es un método sencillo, solalemente tiene un método del repositorio que es **findByNombre** sin realizar la _Query._\n        \n    - **BusarJugadoresPorNombreEntityMapper** es un método algo complejo, lo primero del todo es el método **findByNombreDTO** del respositorio. Es una consulta personalizada y además estoy usando la clase **JugadorDTO.** Se devuelve la entitidad con método toEntityJugadorYposicion que es un mapper que permite crear una consulta personalizada en vez de devolver todas las columnas.\n        \n        - Estos dos métodos se pueden utilizar para el método **verJugadoresPorNombre** de la clase **JugadorController.** Básicamente devuelve el resultado de la clase **Jugador** y es un entidad. Pero también otra opción es que devolver **dto** para el siguiente apartado.\n            \n    - **buscarJugadorPorNombreDTO**: Es muy similar que el primer método pero con consultas personalizadas. Por desgracia no funciona bien del todo porque no devuelve las columnas que corresponden. Este método hace funcionar con la clase **JugadorDTO.**\n        \n    - **buscarJugadoresPorNombreDTOMapper**: Se parece tanto el segundo método, pero en vez de devolver la entidad, devuelve dto. Como siempre contiene un mapper con el método **toDtoVerJugadorYposicion** para que funcione correctamente las consultas personalizadas. Por tanto, está usando el método **findByNombre.**"
+				},
+				{
+					"name": "BuscarJugadorPor",
+					"item": [
+						{
+							"name": "porDocument",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores/document/Z9770067V",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores",
+										"document",
+										"Z9770067V"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PorID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores",
+										"6"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ModificarJugador",
+					"item": [
+						{
+							"name": "porDocument",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Alvaro\",\r\n    \"primerapellido\": \"Blanco\",\r\n    \"segundoapellido\": \"Sangines\",\r\n    \"edad\": 30,\r\n    \"posicion\": \"Centro\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/jugadores/modificarJugadorV2/06190849P",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"jugadores",
+										"modificarJugadorV2",
+										"06190849P"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "VerTodosJugadores",
@@ -388,200 +808,12 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "BuscarJugadorPorID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/jugadores/5",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"jugadores",
-								"5"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "RegistrarJugadorConEquipo",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"Daniel\",\r\n    \"primerapellido\": \"Carvajal\",\r\n    \"segundoapellido\": \"Ramos\",\r\n    \"edad\": 32,\r\n    \"posicion\": \"Defensa\",\r\n    \"document\": \"23533679X\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/jugadores?nombreEquipo=Real Madrid FC",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"jugadores"
-							],
-							"query": [
-								{
-									"key": "nombreEquipo",
-									"value": "Real Madrid FC"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "RegistrarJugadorSinEquipo",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"nombre\":\"Lionel Andrés\",\r\n    \"primerapellido\": \"Messi\",\r\n    \"segundoapellido\": \"Cuccitini\",\r\n    \"edad\":37,\r\n    \"posicion\":\"Delantero\",\r\n    \"document\": \"Z9770067V\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/jugadores/agregarJugadorSinEquipo",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"jugadores",
-								"agregarJugadorSinEquipo"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "BuscarJugadorPorDocument",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/jugadores/document/51888845V",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"jugadores",
-								"document",
-								"51888845V"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "CambiarEdad",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"edad\":18\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/jugadores/cambiarEdad/81956647B",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"jugadores",
-								"cambiarEdad",
-								"81956647B"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "VerJugadoresPorNombre",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/jugadores/verJugadoresPorNombre/Horațiu",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"jugadores",
-								"verJugadoresPorNombre",
-								"Horațiu"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "CambiarEdadV2_corregir",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"edad\":10\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/jugadores/cambiarEdad2/81956647B",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"jugadores",
-								"cambiarEdad2",
-								"81956647B"
-							]
-						}
-					},
-					"response": []
 				}
 			]
+		},
+		{
+			"name": "CambiarLaPosicion",
+			"item": []
 		}
 	]
 }

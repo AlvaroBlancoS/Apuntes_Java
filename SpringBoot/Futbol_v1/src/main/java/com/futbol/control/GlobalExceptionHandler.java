@@ -37,13 +37,26 @@ public class GlobalExceptionHandler {
 		});
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
 	}
-	
-	
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Map<String, String>> handleConstraintViolationException(ConstraintViolationException ex) {
-        Map<String, String> errors = new HashMap<>();
-        errors.put("Validation Error", ex.getMessage());
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
+
+	@ExceptionHandler(ConstraintViolationException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ResponseEntity<Map<String, String>> handleConstraintViolationException(ConstraintViolationException ex) {
+		Map<String, String> errors = new HashMap<>();
+		errors.put("Validation Error", ex.getMessage());
+		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+	}
+
+	/**
+	 * Este manejo de errores puede devolver mensajes más claros si los parametros
+	 * estan faltando. Puedes usar
+	 * 
+	 * @ExceptionHandler en el controlador para capturar excepciones y devolver
+	 *                   respuestas adecuadas.
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
 }

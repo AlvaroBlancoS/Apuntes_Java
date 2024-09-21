@@ -1,5 +1,10 @@
 package com.futbol.util;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@SuppressWarnings("serial")
+@ResponseStatus(HttpStatus.NOT_FOUND)
 public class JugadorNotFoundException extends RuntimeException {
 
 	/**
@@ -9,6 +14,10 @@ public class JugadorNotFoundException extends RuntimeException {
 
 	public JugadorNotFoundException(String mensaje) {
 		super(mensaje);
+	}
+	
+	public JugadorNotFoundException() {
+		super();
 	}
 	
 	

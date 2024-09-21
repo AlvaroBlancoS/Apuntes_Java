@@ -1,17 +1,12 @@
 package com.futbol.control;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,7 +49,7 @@ public class EquipoController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Equipo.class)) }),
 			@ApiResponse(responseCode = "400", description = "Solicitud inválida", content = @Content) })
 	public ResponseEntity<Equipo> crearEquipo(@Valid @RequestBody Equipo equipo) {
-		String nombreEquipo = equipo.getNombre();
+		String nombreEquipo = equipo.getNombreEquipo();
 		Optional<Equipo> equipoExistente = equipoService.buscarPorNombre(nombreEquipo);
 		if (equipoExistente.isPresent()) {
 			throw new EquipoBadRequest(nombreEquipo + " ya existe ese nombre de equipo");
@@ -162,6 +157,13 @@ public class EquipoController {
 			@ApiResponse(responseCode = "200", description = "lista de estadios por pais encontrada", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = List.class)) }),
 			@ApiResponse(responseCode = "404", description = "No existe o no aparece en la lista", content = @Content) })
+	/**
+	 * Hay dos metodos que se pueden usar:
+	 * -buscarEstadiosPorPais
+	 * -buscarEstadiosPorPais_v2
+	 * @param pais
+	 * @return
+	 */
 	public ResponseEntity<List<String>> obtenerEstadiosPorPais(@PathVariable("pais") String pais) {
 		List<String> estadios = equipoService.buscarEstadiosPorPais_v2(pais);
 		boolean siExiste = equipoService.paisExistente(pais);

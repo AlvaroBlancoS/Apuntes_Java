@@ -60,7 +60,7 @@ CREATE TABLE `jugadores` (
   PRIMARY KEY (`idjugador`),
   KEY `FK_equipo_jugador` (`idequipo`),
   CONSTRAINT `FK_equipo_jugador` FOREIGN KEY (`idequipo`) REFERENCES `equipos` (`idequipo`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `jugadores` (
 
 LOCK TABLES `jugadores` WRITE;
 /*!40000 ALTER TABLE `jugadores` DISABLE KEYS */;
-INSERT INTO `jugadores` VALUES (1,1,'Alvarito','Perez','Dominguez',18,'CentroCampista','81956647B'),(2,1,'Marcos','Llorente','',29,'CentroCampista','51888845V'),(3,5,'Horațiu','Moldovan','',26,'Portero','Z6967196H'),(4,5,'Antoine','Griezmann','',32,'Delantero','Z4079155H'),(5,1,'Daniel','Carvajal','Ramos',32,'Defensa','09205535S'),(6,NULL,'Horațiu','Moldovan','',26,'Portero','Y3268254Z'),(7,NULL,'Lionel Andrés','Messi','Cuccitini',37,'Delantero','Z9770067V');
+INSERT INTO `jugadores` VALUES (1,8,'Bryan','Zaragoza','',27,'Defensa','81956647B'),(2,NULL,'Marcos','Llorente','',29,'CentroCampista','51888845V'),(3,5,'Horațiu','Moldovan','',26,'Portero','Z6967196H'),(4,5,'Antoine','Griezmann','',32,'Delantero','Z4079155H'),(5,1,'Daniel','Carvajal','Ramos',32,'Defensa','09205535S'),(6,NULL,'Robin','Le Normand','',27,'Defensa','Y3268254Z'),(7,NULL,'Lionel Andrés','Messi','Cuccitini',37,'Delantero','Z9770067V'),(8,NULL,'Alvaro','Blanco','Sangines',30,'Centro','06190849P');
 /*!40000 ALTER TABLE `jugadores` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -82,4 +82,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-31 20:21:37
+-- Dump completed on 2024-09-21 11:11:42

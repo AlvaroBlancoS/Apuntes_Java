@@ -1,5 +1,7 @@
 package com.futbol.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +19,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "Equipo", description = "Equipo Class")
+@Schema(name = "Equipo", description = "Equipo Class")//Esto suele utilizar OpenAPI y Swagger
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Equipo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +30,7 @@ public class Equipo {
 
 	@NotEmpty(message = "El nombre del equipo es obligatorio")
 	@Column(name = "nombre")
-	private String nombre;
+	private String nombreEquipo;
 
 	@Column(name = "estadio")
 	@NotEmpty(message = "El nombre del estadio es obligatorio")

@@ -21,10 +21,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @Service
 public class EquipoService {
-
+	@Autowired
 	private final EquipoRepository equipoRepository;
 
-	@Autowired
+
 	public EquipoService(EquipoRepository equipoRepository) {
 		this.equipoRepository = equipoRepository;
 	}
@@ -124,7 +124,7 @@ public class EquipoService {
 						"El estadio " + estadio + " existe y no puede tener dos o más equipos");
 			}
 			Equipo equipoExistente = optionalEquipo.get();
-			equipoExistente.setNombre(equipoActualizado.getNombre());
+			equipoExistente.setNombreEquipo(equipoActualizado.getNombreEquipo());
 			equipoExistente.setEstadio(equipoActualizado.getEstadio());
 			equipoExistente.setPais(equipoActualizado.getPais());
 			return equipoRepository.save(equipoExistente);
@@ -134,7 +134,7 @@ public class EquipoService {
 	}
 
 	public Equipo actualizarEstadio(String equipo, Equipo equipoActualizado) {
-		Optional<Equipo> optionalEquipo = equipoRepository.findByNombre(equipo);
+		Optional<Equipo> optionalEquipo = equipoRepository.findByNombreEquipo(equipo);
 		String nuevoEstadio = equipoActualizado.getEstadio();
 		boolean verificarEstadio = equipoRepository.existsByEstadio(nuevoEstadio);
 		if (optionalEquipo.isPresent()) {
@@ -150,7 +150,7 @@ public class EquipoService {
 	}
 
 	public Equipo cambiarPais(String equipoPais, Equipo equipoActualizado) {
-		Optional<Equipo> optionalEquipo = equipoRepository.findByNombre(equipoPais);
+		Optional<Equipo> optionalEquipo = equipoRepository.findByNombreEquipo(equipoPais);
 		String nuevoPais = equipoActualizado.getPais();
 		if (optionalEquipo.isPresent()) {
 			Equipo equipoExistente = optionalEquipo.get();
@@ -168,19 +168,19 @@ public class EquipoService {
 			throw new EquipoNotFoundException(id + " no aparece en la lista");
 		}
 		Equipo equipoExistente = buscarID.get();
-		String nombreModificado = equipoActualizado.getNombre();
+		String nombreModificado = equipoActualizado.getNombreEquipo();
 		// Buscar el nuevo nombre ya esta en la lista
-		if (equipoRepository.findByNombre(nombreModificado).isPresent()) {
+		if (equipoRepository.findByNombreEquipo(nombreModificado).isPresent()) {
 			throw new EquipoNotFoundException(nombreModificado + " ya existe ese equipo");
 		}
 
-		equipoExistente.setNombre(nombreModificado);
+		equipoExistente.setNombreEquipo(nombreModificado);
 		return equipoRepository.save(equipoExistente);
 	}
 
 	public Equipo modificarNombreEquipo_nombre(String nombreOriginal, Equipo equipoActualizado) {
 		// Buscar nombre original
-		Optional<Equipo> buscarNombreOriginal = equipoRepository.findByNombre(nombreOriginal);
+		Optional<Equipo> buscarNombreOriginal = equipoRepository.findByNombreEquipo(nombreOriginal);
 		if (!buscarNombreOriginal.isPresent()) {
 			throw new EquipoNotFoundException(nombreOriginal + " no aparece en la lista");
 		}
@@ -192,24 +192,24 @@ public class EquipoService {
 		}
 
 		Equipo equipoExistente = buscarNombreOriginal.get();
-		String nombreModificado = equipoActualizado.getNombre();
+		String nombreModificado = equipoActualizado.getNombreEquipo();
 
 		// Buscar el nuevo nombre ya esta en la lista
-		if (!nombreOriginal.equals(nombreModificado) && equipoRepository.findByNombre(nombreModificado).isPresent()) {
+		if (!nombreOriginal.equals(nombreModificado) && equipoRepository.findByNombreEquipo(nombreModificado).isPresent()) {
 			throw new EquipoNotFoundException(nombreModificado + " ya existe ese equipo");
 		}
 
-		equipoExistente.setNombre(nombreModificado);
+		equipoExistente.setNombreEquipo(nombreModificado);
 		return equipoRepository.save(equipoExistente);
 
 	}
 
 	public Optional<Equipo> buscarPorNombre(String nombre) {
-		return equipoRepository.findByNombre(nombre);
+		return equipoRepository.findByNombreEquipo(nombre);
 	}
 	
 	public Optional<Integer>buscarIDPorNombre(String nombre ){
-		return equipoRepository.findIdByNombre(nombre);
+		return equipoRepository.findIdByNombreEquipo(nombre);
 	}
 
 	public List<String> listarEstadios() {
