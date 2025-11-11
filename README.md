@@ -16,6 +16,7 @@
 
 ## Condición switch
 - **[swith](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Conditions/ConditionSwitch.java)**: Ideal cuando se compran valores concretos de una misma variable
+- **[swith](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Conditions/ConditionSwitchV2.java)**: La función es lo mismo que el anterior pero el código se ve más limpio
 
 ## Operadores comunes en condiciones
 - **==** : Igual a  
