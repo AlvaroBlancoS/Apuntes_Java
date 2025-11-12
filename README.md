@@ -54,7 +54,7 @@
 - **[Do While V1](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/DoWhileV1.java)**: Similar a `While`, pero garantiza al menos una ejecución antes de comprobar la condición
 - **[Do While V2](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/DoWhileV2.java)**:También puede recorre colecciones o arreglos, pero garantiza al menos una ejecución antes de comprobar la condición
   
-## Entre while y wo while
+## Entre while y do while
 - **[Entre While y Do While](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/WhiteAndDoWhile.java)**: Es un buen ejemplo para entender la diferencia
 - `While`
   - Es un bucle de comprobación previa (evalúa antes de ejecutar):
