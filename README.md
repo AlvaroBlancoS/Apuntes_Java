@@ -6,9 +6,9 @@
 - [Condición switch](#condición-switch)
 - [Bucle for](#bucle-for)
 - [Bucle foreach](#bucle-foreach)
-- [Bucle While](#bucle-while)
-- [Bucle Do While](#bucle-Do-While)
-- [Entre While y Do While](#entre-while-y-do-while)
+- [Bucle while](#bucle-while)
+- [Bucle do while](#bucle-Do-While)
+- [Entre while y wo while](#entre-while-y-do-while)
 
 ## Condición if
 - **[if](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Conditions/BasicCondition.java)**: Ejecuta un bloque de código si la condición es verdadera
@@ -38,22 +38,23 @@
 - **[for V1](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/ForV1.java)**: Se usa cuando sabemos cuántas veces queremos repetir algo. Este incrementa de 1 a 5
 - **[for V2](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/ForV2.java)**:  Es útil de recorrer colecciones o arreglos
 - **[for V3](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/ForV3.java)**: Lee los números pares e impares
-- **[Foreach V1](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/ForEachV1.java)**: También se recorre colecciones o arreglos pero es más fácil de usar
 - **[Control de bucles](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/LoopControl.java)**:
   * `break` => Sale del bucle completamente
   * `While` => Salta a la siguiente iteración
-  
-##Bucle While
+## Bucle foreach
+- **[Foreach V1](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/ForEachV1.java)**: También se recorre colecciones o arreglos pero es más fácil de usar
+
+## Bucle while
 - **[While V1](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/WhileV1.java)**:Eejcuta un bloque mientas la condición sea verdadera
 - **[While V2](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/WhileV2.java)**:Curiosamente se puede recorrer colecciones o arreglaos mientas la condición sea verdadera
 - **[While V3](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/WhileV3.java)**: Lee los números pares e impares mientas la condición sea verdadera
 - **[While V4](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/WhileV4.java)**: Introducir de un numéro mayor que x
 
-#Bucle Do While
+## Bucle do while
 - **[Do While V1](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/DoWhileV1.java)**: Similar a `While`, pero garantiza al menos una ejecución antes de comprobar la condición
 - **[Do While V2](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/DoWhileV2.java)**:También puede recorre colecciones o arreglos, pero garantiza al menos una ejecución antes de comprobar la condición
   
-##Entre While y Do While
+## Entre while y wo while
 - **[Entre While y Do While](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/WhiteAndDoWhile.java)**: Es un buen ejemplo para entender la diferencia
 - `While`
   - Es un bucle de comprobación previa (evalúa antes de ejecutar):
