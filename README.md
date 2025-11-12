@@ -33,7 +33,7 @@
 - **&& (and)/ || (or)/ ! (not)** : Operadores lógicos
 - [Primer lógico](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Conditions/LogicV1.java)
 - [Segundo lógico](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Conditions/LogicV2.java)
-- 
+  
 ## Bucle for
 - **[for V1](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/ForV1.java)**: Se usa cuando sabemos cuántas veces queremos repetir algo. Este incrementa de 1 a 5
 - **[for V2](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Loops/ForV2.java)**:  Es útil de recorrer colecciones o arreglos
