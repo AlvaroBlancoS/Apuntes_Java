@@ -9,6 +9,7 @@
 - [Bucle while](#bucle-while)
 - [Bucle do while](#bucle-Do-While)
 - [Entre while y wo while](#entre-while-y-do-while)
+- [Stream](#stream)
 
 ## Condición if
 - **[if](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/learning/control_structures/Conditions/BasicCondition.java)**: Ejecuta un bloque de código si la condición es verdadera
@@ -74,5 +75,7 @@
     * Validaciones de entrada (pedir datos hasta que sean correctos).
     * Intentos de contraseña, confirmaciones, etc.
   - En lógica: "Hz esto al menos una vez, y repite mientras la condición sea verdadera"
+ ## Stream
+- **[Streamv1]()**: prueba
     
 
