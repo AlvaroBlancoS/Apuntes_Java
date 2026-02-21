@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "SpringData2",
+            "request": "launch",
+            "mainClass": "com.practice.springData2.SpringData2Application",
+            "envFile": "${workspaceFolder}/.env/services.env",
+            "projectName": "SpringData2"
+        }
+    ]
+}
