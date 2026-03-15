@@ -41,19 +41,19 @@ public class LuceneSciIndex implements Closeable {
     }
 
     /** Indexa un nombre científico (normaliza y separa en campos) */
-    public void addNameSpecie(String rawScientificName) throws IOException {
-        String norm = SearchSpecies.normalizeStrong(rawScientificName);
+    public void addAtwoWordName(String rawScientificName) throws IOException {
+        String norm = TaxonNameUtils.normalizeStrong(rawScientificName);
         if (norm.isEmpty()) return;
 
-        String[] toks = SearchSpecies.tokenize(norm);
-        String genus = toks.length >= 1 ? toks[0] : "";
-        String species = toks.length >= 2 ? toks[1] : "";
+        String[] toks = TaxonNameUtils.tokenize(norm);
+        String firstWord = toks.length >= 1 ? toks[0] : "";
+        String secondWord = toks.length >= 2 ? toks[1] : "";
 
         IndexWriterConfig cfg = new IndexWriterConfig(analyzer);
         try (IndexWriter writer = new IndexWriter(directory, cfg)) {
             Document doc = new Document();
-            doc.add(new TextField("genus", genus, Field.Store.YES));
-            if (!species.isEmpty()) doc.add(new TextField("species", species, Field.Store.YES));
+            doc.add(new TextField("firstWord", firstWord, Field.Store.YES));
+            if (!secondWord.isEmpty()) doc.add(new TextField("secondWord", secondWord, Field.Store.YES));
             doc.add(new TextField("full", norm, Field.Store.YES)); // para mostrar/bonus
             writer.addDocument(doc);
             writer.commit();
@@ -61,8 +61,8 @@ public class LuceneSciIndex implements Closeable {
     }
 
     
-    public void addName(String rawScientificName) throws IOException {
-        String norm = SearchSpecies.normalizeStrong(rawScientificName);
+    public void addAWordName(String rawScientificName) throws IOException {
+        String norm = TaxonNameUtils.normalizeStrong(rawScientificName);
         if (norm.isEmpty())
             return;
 
@@ -76,11 +76,11 @@ public class LuceneSciIndex implements Closeable {
         }
     }
 
-    public void addAll(Collection<String> rawScientificNames) throws IOException {
+    public void addAllAWordName(Collection<String> rawScientificNames) throws IOException {
         IndexWriterConfig cfg = new IndexWriterConfig(analyzer);
         try (IndexWriter writer = new IndexWriter(directory, cfg)) {
             for (String raw : rawScientificNames) {
-                String norm = SearchSpecies.normalizeStrong(raw);
+                String norm = TaxonNameUtils.normalizeStrong(raw);
                 if (norm.isEmpty())
                     continue;
                 Document doc = new Document();
@@ -92,19 +92,19 @@ public class LuceneSciIndex implements Closeable {
     }
 
         /** Indexa muchos nombres de forma eficiente */
-    public void addAllSpecie(Collection<String> rawScientificNames) throws IOException {
+    public void addAllAtwoWordsName(Collection<String> rawScientificNames) throws IOException {
         IndexWriterConfig cfg = new IndexWriterConfig(analyzer);
         try (IndexWriter writer = new IndexWriter(directory, cfg)) {
             for (String raw : rawScientificNames) {
-                String norm = SearchSpecies.normalizeStrong(raw);
+                String norm = TaxonNameUtils.normalizeStrong(raw);
                 if (norm.isEmpty()) continue;
-                String[] toks = SearchSpecies.tokenize(norm);
-                String genus = toks.length >= 1 ? toks[0] : "";
-                String species = toks.length >= 2 ? toks[1] : "";
+                String[] toks = TaxonNameUtils.tokenize(norm);
+                String firstWord = toks.length >= 1 ? toks[0] : "";
+                String secondWord = toks.length >= 2 ? toks[1] : "";
 
                 Document doc = new Document();
-                doc.add(new TextField("genus", genus, Field.Store.YES));
-                if (!species.isEmpty()) doc.add(new TextField("species", species, Field.Store.YES));
+                doc.add(new TextField("firstWord", firstWord, Field.Store.YES));
+                if (!secondWord.isEmpty()) doc.add(new TextField("secondWord", secondWord, Field.Store.YES));
                 doc.add(new TextField("full", norm, Field.Store.YES));
                 writer.addDocument(doc);
             }
@@ -112,8 +112,8 @@ public class LuceneSciIndex implements Closeable {
         }
     }
     
-    public List<String> search(String rawQuery, int maxEdits, int topK) throws IOException {
-        String q = SearchSpecies.normalizeStrong(rawQuery);
+    public List<String> searchWithAsingleWord(String rawQuery, int maxEdits, int topK) throws IOException {
+        String q = TaxonNameUtils.normalizeStrong(rawQuery);
         List<String> results = new ArrayList<>();
         if (q.isEmpty())
             return results;
@@ -141,9 +141,9 @@ public class LuceneSciIndex implements Closeable {
      * @param maxEdits 0–2 ediciones por token (recomendado 1–2)
      * @param topK número de resultados
      */
-    public List<String> searchSpecie(String rawQuery, int maxEdits, int topK) throws IOException {
-        String q = SearchSpecies.normalizeStrong(rawQuery);
-        String[] qt = SearchSpecies.tokenize(q);
+    public List<String> searchWithTwoWords(String rawQuery, int maxEdits, int topK) throws IOException {
+        String q = TaxonNameUtils.normalizeStrong(rawQuery);
+        String[] qt = TaxonNameUtils.tokenize(q);
 
         List<String> out = new ArrayList<>();
         if (q.isEmpty()) return out;
@@ -157,37 +157,37 @@ public class LuceneSciIndex implements Closeable {
             if (qt.length == 1) {
                 String tok = qt[0];
 
-                // species tiene más peso, genus un poco menos
+                // secondWord tiene más peso, firstWord un poco menos
                 BooleanQuery.Builder b = new BooleanQuery.Builder();
 
                 // Coincidencias exactas por término
-                b.add(new TermQuery(new Term("species", tok)), BooleanClause.Occur.SHOULD);
-                b.add(new BoostQuery(new TermQuery(new Term("genus", tok)), 0.8f), BooleanClause.Occur.SHOULD);
+                b.add(new TermQuery(new Term("secondWord", tok)), BooleanClause.Occur.SHOULD);
+                b.add(new BoostQuery(new TermQuery(new Term("firstWord", tok)), 0.8f), BooleanClause.Occur.SHOULD);
 
                 // Fuzzy por token (tolerancia a errores)
-                b.add(new BoostQuery(new FuzzyQuery(new Term("species", tok), edits), 1.2f), BooleanClause.Occur.SHOULD);
-                b.add(new BoostQuery(new FuzzyQuery(new Term("genus", tok), edits), 0.9f), BooleanClause.Occur.SHOULD);
+                b.add(new BoostQuery(new FuzzyQuery(new Term("secondWord", tok), edits), 1.2f), BooleanClause.Occur.SHOULD);
+                b.add(new BoostQuery(new FuzzyQuery(new Term("firstWord", tok), edits), 0.9f), BooleanClause.Occur.SHOULD);
 
                 // Prefijo para autocompletar parciales ("esch" o "col")
-                b.add(new BoostQuery(new PrefixQuery(new Term("species", tok)), 1.1f), BooleanClause.Occur.SHOULD);
-                b.add(new BoostQuery(new PrefixQuery(new Term("genus", tok)), 0.9f), BooleanClause.Occur.SHOULD);
+                b.add(new BoostQuery(new PrefixQuery(new Term("secondWord", tok)), 1.1f), BooleanClause.Occur.SHOULD);
+                b.add(new BoostQuery(new PrefixQuery(new Term("firstWord", tok)), 0.9f), BooleanClause.Occur.SHOULD);
 
                 query = b.build();
 
             } else {
-                // Tomamos solo los dos primeros tokens: genus + species
+                // Tomamos solo los dos primeros tokens: firstWord + secondWord
                 String qg = qt[0];
                 String qs = qt[1];
 
                 BooleanQuery.Builder b = new BooleanQuery.Builder();
 
                 // Fuzzy por campo con pesos
-                b.add(new BoostQuery(new FuzzyQuery(new Term("genus", qg), edits), 1.5f), BooleanClause.Occur.SHOULD);
-                b.add(new BoostQuery(new FuzzyQuery(new Term("species", qs), edits), 1.3f), BooleanClause.Occur.SHOULD);
+                b.add(new BoostQuery(new FuzzyQuery(new Term("firstWord", qg), edits), 1.5f), BooleanClause.Occur.SHOULD);
+                b.add(new BoostQuery(new FuzzyQuery(new Term("secondWord", qs), edits), 1.3f), BooleanClause.Occur.SHOULD);
 
                 // Bonus por coincidencia exacta de tokens
-                b.add(new BoostQuery(new TermQuery(new Term("genus", qg)), 1.2f), BooleanClause.Occur.SHOULD);
-                b.add(new BoostQuery(new TermQuery(new Term("species", qs)), 1.1f), BooleanClause.Occur.SHOULD);
+                b.add(new BoostQuery(new TermQuery(new Term("firstWord", qg)), 1.2f), BooleanClause.Occur.SHOULD);
+                b.add(new BoostQuery(new TermQuery(new Term("secondWord", qs)), 1.1f), BooleanClause.Occur.SHOULD);
 
                 // Bonus por frase completa en "full" (cuando es exactamente dos tokens)
                 PhraseQuery pq = new PhraseQuery(0, "full", qg, qs);
