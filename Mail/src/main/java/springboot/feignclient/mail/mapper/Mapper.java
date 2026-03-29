@@ -22,6 +22,7 @@ public class Mapper {
     public MailDto convertToDto(Mail entity) {
 
         return MailDto.builder()
+                .id(entity.getId())
                 .mail(entity.getMail())
                 .description(entity.getDescription())
                 .build();

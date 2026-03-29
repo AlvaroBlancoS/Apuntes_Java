@@ -27,39 +27,8 @@ public class Mail {
     @Column(nullable = false, updatable = false)
     @GeneratedValue(generator = "uuid", strategy = GenerationType.AUTO)
     private UUID id;
+    @Column(nullable = false, unique = true)
     private String mail;
+    @Column(length = 300)
     private String description;
-
-    public Mail() {
-    }
-
-    public Mail(UUID id, String mail, String description) {
-        this.id = id;
-        this.mail = mail;
-        this.description = description;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }
