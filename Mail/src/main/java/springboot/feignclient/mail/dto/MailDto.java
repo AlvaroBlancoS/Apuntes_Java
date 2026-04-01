@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MailDto {
     @Schema(description = "ID", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	// @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UUID id;
     @Schema(description = "Correo electrónico", example = "user@example.com")
     @Email(message = "El correo electrónico debe tener un formato válido")

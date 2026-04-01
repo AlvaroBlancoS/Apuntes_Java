@@ -1,6 +1,7 @@
-package springboot.feignclient.mail.entity;
+package springboot.feignclient.user.entity;
 
 import java.util.UUID;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,21 +15,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "mail", schema = "feign_client")
-public class Mail {
+@Entity
+@Table(name = "users", schema = "feign_client")
+public class User {
 
     @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue(generator = "uuid", strategy = GenerationType.AUTO)
     private UUID id;
+
+    @Column(nullable = false)
+    private String name;
+
     @Column(nullable = false, unique = true)
-    private String mail;
-    @Column(length = 300)
-    private String description;
+    private String password;
+
+    @Column(name = "mail_id", nullable = false, unique = true)
+    private UUID mailId;
 }
