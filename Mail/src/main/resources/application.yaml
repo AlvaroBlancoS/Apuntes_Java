@@ -1,18 +1,15 @@
+server:
+  port: 8080
 spring:
   application:
     name: Mail
-  datasource:
-    url: jdbc:postgresql://localhost:5432/testdb
-    username: postgres
-    password: postgres
-
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
   logging:
   level:

@@ -12,7 +12,6 @@ import springboot.feignclient.mail.entity.Mail;
 public class Mapper {
 
     public Mail convertToEntity(MailDto dto) {
-
        return Mail.builder()
                 .mail(dto.getMail())
                 .description(dto.getDescription())
@@ -20,7 +19,6 @@ public class Mapper {
     }
 
     public MailDto convertToDto(Mail entity) {
-
         return MailDto.builder()
                 .id(entity.getId())
                 .mail(entity.getMail())
