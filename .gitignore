@@ -1,8 +1,11 @@
 # VSCode
-.vscode/
+#.vscode/
 
 # Logs
 *.log
+
+# env
+#.env/
 
 # Archivos del sistema
 .DS_Store
