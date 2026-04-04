@@ -5,7 +5,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import lombok.RequiredArgsConstructor;
 import springboot.feignclient.mail.dto.MailDto;
@@ -35,7 +37,8 @@ public class MailService {
 
     public MailDto getMailById( UUID id) {
         Mail mail = emailRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Correo electrónico no encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Correo electrónico no encontrado"));
         return mapperEmail.convertToDto(mail);
     }
 
@@ -49,8 +52,8 @@ public class MailService {
         return mapperEmail.convertToDto(savedMail);
     }
 
-    public MailDto updateMail(MailDto dto) {
-        Mail existingMail = emailRepository.findById(dto.getId())
+    public MailDto updateMail(UUID id, MailDto dto) {
+        Mail existingMail = emailRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Correo electrónico no encontrado"));
         Mail updatedMail = mapperEmail.updateMail(dto, existingMail);
         Mail savedMail = emailRepository.save(updatedMail);

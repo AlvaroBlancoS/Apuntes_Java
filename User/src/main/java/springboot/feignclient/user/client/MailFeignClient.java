@@ -12,9 +12,9 @@ import springboot.feignclient.user.dto.MailDto;
 public interface MailFeignClient {
 
     @GetMapping("/api/mail/{id}")
-    MailDto getMailById(@PathVariable UUID id);
+    MailDto getMailById(@PathVariable("id") UUID id);
 
     @GetMapping("/api/mail/name/{name}")
-    MailDto getMailByName(@PathVariable String name);
+    MailDto getMailByName(@PathVariable("name") String name);
 
 }

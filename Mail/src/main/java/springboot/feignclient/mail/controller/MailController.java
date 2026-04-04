@@ -57,10 +57,10 @@ public class MailController {
         return mailService.createMail(dto);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Operation(summary = "Actualizar un correo electrónico", description = "Actualiza la información de un correo electrónico existente")
-    public MailDto updateMail(@Valid @RequestBody MailDto dto) {
-        return mailService.updateMail(dto);
+    public MailDto updateMail(@PathVariable UUID id, @Valid @RequestBody MailDto dto) {
+        return mailService.updateMail(id, dto);
     }
 
     @DeleteMapping("/{id}")
