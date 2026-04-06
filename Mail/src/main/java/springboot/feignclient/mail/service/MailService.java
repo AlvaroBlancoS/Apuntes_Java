@@ -31,7 +31,7 @@ public class MailService {
 
     public MailDto getMailByName(String name) {
         Mail mail = emailRepository.findByMail(name)
-                .orElseThrow(() -> new RuntimeException("Correo electrónico no encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Correo electrónico no encontrado"));
         return mapperEmail.convertToDto(mail);
     }
 
@@ -45,7 +45,7 @@ public class MailService {
     public MailDto createMail(MailDto dto) {
         boolean mailExists = emailRepository.findByMail(dto.getMail()).isPresent();
         if (mailExists) {
-            throw new RuntimeException("El correo electrónico ya existe");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El correo electrónico ya existe");
         }
         Mail mail = mapperEmail.convertToEntity(dto);
         Mail savedMail = emailRepository.save(mail);
@@ -54,7 +54,7 @@ public class MailService {
 
     public MailDto updateMail(UUID id, MailDto dto) {
         Mail existingMail = emailRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Correo electrónico no encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Correo electrónico no encontrado"));
         Mail updatedMail = mapperEmail.updateMail(dto, existingMail);
         Mail savedMail = emailRepository.save(updatedMail);
         return mapperEmail.convertToDto(savedMail);
@@ -64,7 +64,7 @@ public class MailService {
         if (mailExists(null, id, 2)) {
             emailRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Correo electrónico no encontrado");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Correo electrónico no encontrado");
         }
     }
 

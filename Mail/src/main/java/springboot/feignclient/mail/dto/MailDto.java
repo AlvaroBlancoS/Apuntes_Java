@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.AllArgsConstructor;
@@ -27,7 +26,7 @@ public class MailDto {
     private String mail;
     @Schema(description = "Descripción", example = "Descripción del correo electrónico")
     @Size(max = 300, message = "La descripción no puede exceder 300 caracteres")
-    @Pattern(regexp = "^[a-zA-Z\\s]*$", message = "La descripción solo puede contener letras y espacios")
+    // @Pattern(regexp = "^[a-zA-Z\\s]*$", message = "La descripción solo puede contener letras y espacios")
     private String description;
 
 }
