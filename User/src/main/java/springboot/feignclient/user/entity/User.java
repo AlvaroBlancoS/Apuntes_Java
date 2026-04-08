@@ -29,12 +29,12 @@ public class User {
     @GeneratedValue(generator = "uuid", strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String password;
 
-    @Column(name = "mail_id", nullable = false, unique = true)
+    @Column(name = "mail_id", nullable = false)
     private UUID mailId;
 }

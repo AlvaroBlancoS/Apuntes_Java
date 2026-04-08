@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import springboot.feignclient.user.dto.LoginUserDto;
 import springboot.feignclient.user.dto.UserDto;
 import springboot.feignclient.user.service.UserService;
 
@@ -40,11 +41,17 @@ public class UserController {
         UserDto user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
-
+    
     @GetMapping("/name/{name}")
     public ResponseEntity<UserDto> getUserByName(@PathVariable String name) {
         UserDto user = userService.getUserByName(name);
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestBody LoginUserDto loginUserDto) {
+        String response = userService.insertPasword(loginUserDto);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping

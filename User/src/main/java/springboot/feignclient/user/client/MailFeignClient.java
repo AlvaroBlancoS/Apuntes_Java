@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import springboot.feignclient.user.dto.MailDto;
 
-@FeignClient(name = "mail-service", url = "http://localhost:8081")
+@FeignClient(name = "mail-service", url = "http://localhost:8080")
 public interface MailFeignClient {
 
     @GetMapping("/api/mail/{id}")

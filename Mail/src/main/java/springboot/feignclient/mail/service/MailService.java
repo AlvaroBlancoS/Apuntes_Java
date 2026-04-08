@@ -73,7 +73,7 @@ public class MailService {
             Mail mail = emailRepository.findByMail(name).get();
             emailRepository.delete(mail);
         } else {
-            throw new RuntimeException("Correo electrónico no encontrado");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Correo electrónico no encontrado");
         }
     }
 
