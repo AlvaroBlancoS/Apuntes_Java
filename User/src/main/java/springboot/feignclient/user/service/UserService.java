@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import lombok.RequiredArgsConstructor;
 import springboot.feignclient.user.dto.LoginUserDto;
+import springboot.feignclient.user.dto.MailDto;
 import springboot.feignclient.user.dto.UserDto;
 import springboot.feignclient.user.entity.User;
 import springboot.feignclient.user.mapper.Mapper;
@@ -44,14 +45,25 @@ public class UserService {
         return mapperUser.convertToDto(user);
     }
 
+    public MailDto getMailByUserId(UUID id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+
+        MailDto mailRquest = mapperUser.getMailById(user.getMailId());
+        return MailDto.builder()
+                .id(mailRquest.getId())
+                .mail(mailRquest.getMail())
+                .description(mailRquest.getDescription())
+                .build();
+    }
+
     public String insertPasword(LoginUserDto loginUserDto) {
         User user = userRepository.findByName(loginUserDto.getUserName())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
         boolean isValid = passwordEncoder.matches(
-                loginUserDto.getPassword(), 
-                user.getPassword()
-        );
+                loginUserDto.getPassword(),
+                user.getPassword());
         if (!isValid) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Contraseña incorrecta");
         }
@@ -104,31 +116,15 @@ public class UserService {
         return false;
     }
 
-    /**
-     * Asumiendo que el campo "password" se utiliza para almacenar el correo
-     * electrónico en este ejemplo, aunque en un caso real debería ser un campo
-     * separado.
-     * 
-     * @param name
-     * @return
-     */
-    public String getUserEmailByName(String name) {
+
+    public MailDto getUserEmailByName(String name) {
         User user = userRepository.findByName(name)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
-        return user.getPassword();
-    }
-
-    /**
-     * Asumiendo que el campo "password" se utiliza para almacenar el correo
-     * electrónico en este ejemplo, aunque en un caso real debería ser un campo
-     * separado.
-     * 
-     * @param id
-     * @return
-     */
-    public String getUserEmailById(UUID id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
-        return user.getPassword();
+        MailDto mailRquest = mapperUser.getMailById(user.getMailId());     
+        return MailDto.builder()
+                .id(mailRquest.getId())
+                .mail(mailRquest.getMail())
+                .description(mailRquest.getDescription())
+                .build();
     }
 }

@@ -16,8 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import springboot.feignclient.user.dto.LoginUserDto;
+import springboot.feignclient.user.dto.MailDto;
 import springboot.feignclient.user.dto.UserDto;
 import springboot.feignclient.user.service.UserService;
 
@@ -30,49 +35,58 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUsers(@RequestParam(defaultValue = "id,asc") String[] sort) {
-        Sort sortObj = Sort.by(sort);
-        List<UserDto> users = userService.getAllUsers(sortObj);
-        return ResponseEntity.ok(users);
+    @Operation(summary = "Obtener todos los usuarios", description = "Devuelve una lista de todos los usuarios registrados, ordenados por ID ascendente o descendente")
+    public List<UserDto> getAllUsers(@RequestParam(defaultValue = "id,asc") String sort) {
+        String[] sortParams = sort.split(",");
+        Sort.Direction direction = sortParams.length > 1 && "desc".equalsIgnoreCase(sortParams[1]) ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sortObj = Sort.by(direction, sortParams[0]);
+        return userService.getAllUsers(sortObj);
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Obtener un usuario por ID", description = "Devuelve el usuario correspondiente al ID proporcionado")
     public ResponseEntity<UserDto> getUserById(@PathVariable UUID id) {
         UserDto user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
     
     @GetMapping("/name/{name}")
+    @Operation(summary = "Obtener un usuario por nombre", description = "Devuelve el usuario correspondiente al nombre proporcionado")
     public ResponseEntity<UserDto> getUserByName(@PathVariable String name) {
         UserDto user = userService.getUserByName(name);
         return ResponseEntity.ok(user);
     }
 
     @GetMapping("/login")
+    @Operation(summary = "Iniciar sesión de usuario", description = "Permite a un usuario iniciar sesión proporcionando su nombre y contraseña")
     public ResponseEntity<String> loginUser(@RequestBody LoginUserDto loginUserDto) {
         String response = userService.insertPasword(loginUserDto);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
+    @Operation(summary = "Crear un nuevo usuario", description = "Crea y guarda un nuevo usuario en el sistema")
     public ResponseEntity<UserDto> createUser(@RequestBody @Validated UserDto dto) {
         UserDto createdUser = userService.createUser(dto);
         return ResponseEntity.ok(createdUser);
     }
 
     @PutMapping
+    @Operation(summary = "Actualizar un usuario", description = "Actualiza la información de un usuario existente")
     public ResponseEntity<UserDto> updateUser(@RequestBody @Validated UserDto dto) {
         UserDto updatedUser = userService.updateUser(dto);
         return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar un usuario por ID", description = "Elimina un usuario específico basado en su ID")
     public ResponseEntity<Void> deleteUserById(@PathVariable UUID id) {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/name/{name}")
+    @Operation(summary = "Eliminar un usuario por nombre", description = "Elimina un usuario específico basado en su nombre")
     public ResponseEntity<Void> deleteUserByName(@PathVariable String name) {
         userService.deleteUserByName(name);
         return ResponseEntity.noContent().build();
@@ -80,24 +94,21 @@ public class UserController {
 
 
     @GetMapping("/name/{name}/email")
-    public ResponseEntity<String> getUserEmailByName(@PathVariable String name) {
-        String userEmail = userService.getUserEmailByName(name);
+    @Operation(summary = "Obtener el correo electrónico de un usuario por nombre", description = "Devuelve el correo electrónico de un usuario específico basado en su nombre")
+    public ResponseEntity<MailDto> getUserEmailByName(@PathVariable String name) {
+        MailDto userEmail = userService.getUserEmailByName(name);
         return ResponseEntity.ok(userEmail);
     }
 
-    @GetMapping("/name/{name}/name")
-    public ResponseEntity<String> getUserNameByName(@PathVariable String name) {
-        String userName = userService.getUserByName(name).getName();
-        return ResponseEntity.ok(userName);
-    }
-
     @GetMapping("/{id}/email")
-    public ResponseEntity<String> getUserEmailById(@PathVariable UUID id) {
-        String email = userService.getUserEmailById(id);
+    @Operation(summary = "Obtener el correo electrónico de un usuario por ID", description = "Devuelve el correo electrónico de un usuario específico basado en su ID")
+    public ResponseEntity<MailDto> getUserEmailById(@PathVariable UUID id) {
+        MailDto email = userService.getMailByUserId(id);
         return ResponseEntity.ok(email);
     }
 
-    @GetMapping("/{id}/mail")
+    @GetMapping("/{id}/username")
+    @Operation(summary = "Obtener el nombre de un usuario por ID", description = "Devuelve el nombre de un usuario específico basado en su ID")
     public ResponseEntity<String> getUserNameById(@PathVariable UUID id) {
         String name = userService.getUserById(id).getName();
         return ResponseEntity.ok(name);

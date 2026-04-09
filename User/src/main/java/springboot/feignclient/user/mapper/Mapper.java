@@ -45,7 +45,7 @@ public class Mapper {
         return entity;
     }
 
-    private MailDto getMailById(UUID idMail) {
+    public MailDto getMailById(UUID idMail) {
         try {
             return mailFeignClient.getMailById(idMail);
         } catch (FeignException.NotFound e) {
