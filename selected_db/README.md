@@ -1,110 +1,106 @@
-# 📘 Documentación: Carpeta `selected_db`
+# 📘 Documentación: selected_db
 
 ## 📂 Estructura
 
 ```
 selected_db/
 ├── .env/
+│   ├── mysql.env
+│   └── postgresql.env
 └── .vscode/
+    └── launch.json
 ```
 
 ---
 
-## 📌 Descripción general
+## 🔐 Carpeta `.env`
 
-La carpeta `selected_db` contiene la configuración necesaria para definir qué base de datos utilizar en la aplicación.  
-Se apoya en variables de entorno y configuraciones del entorno de desarrollo para facilitar su uso y mantenimiento.
-
----
-
-## 🔐 Carpeta `.env/`
-
-### 🧠 ¿Qué es?
-
-La carpeta `.env` contiene archivos con **variables de entorno**, que permiten configurar valores sensibles o variables sin necesidad de modificar el código fuente.
+Contiene archivos de configuración para diferentes bases de datos.  
+Cada archivo define las variables necesarias para conectarse a una base de datos específica.
 
 ---
 
-### ⚙️ ¿Cómo funciona?
+## 🐬 `mysql.env`
 
-1. Se definen variables en archivos dentro de `.env`
-2. Estas variables son leídas por la aplicación en tiempo de ejecución
-3. Se utilizan para configurar la conexión a la base de datos
+### 📌 Propósito
+Define la configuración para usar **MySQL** como base de datos.
 
----
+### ⚙️ Funcionamiento
 
-### 🛠 Ejemplo de archivo `.env`
+1. Se selecciona este archivo como fuente de variables de entorno  
+2. La aplicación lee sus valores  
+3. Se construye la conexión a MySQL  
+
+### 🛠 Ejemplo
 
 ```
+DB_TYPE=mysql
 DB_HOST=localhost
 DB_PORT=3306
-DB_NAME=mi_base
+DB_NAME=mi_db
 DB_USER=root
 DB_PASSWORD=1234
 ```
 
 ---
 
-### 🔄 Flujo
+## 🐘 `postgresql.env`
 
-1. La aplicación arranca  
-2. Lee las variables del archivo `.env`  
-3. Construye la configuración de conexión  
-4. Se conecta a la base de datos  
+### 📌 Propósito
+Define la configuración para usar **PostgreSQL** como base de datos.
 
----
+### ⚙️ Funcionamiento
 
-### 💡 Ventajas
+1. Se selecciona este archivo como fuente de variables de entorno  
+2. La aplicación lee sus valores  
+3. Se construye la conexión a PostgreSQL  
 
-- Evita hardcodear credenciales
-- Permite cambiar configuración sin tocar código
-- Mejora la seguridad
-- Facilita múltiples entornos (dev, test, prod)
-
----
-
-## 🛠 Carpeta `.vscode/`
-
-### 🧠 ¿Qué es?
-
-La carpeta `.vscode` contiene configuraciones específicas del editor **Visual Studio Code** para el proyecto.
-
----
-
-### ⚙️ Archivo de configuración
-
-Normalmente incluye archivos como:
+### 🛠 Ejemplo
 
 ```
-settings.json
-launch.json
+DB_TYPE=postgresql
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=mi_db
+DB_USER=postgres
+DB_PASSWORD=1234
 ```
 
 ---
 
-### 🔧 `settings.json`
+## 🔄 Cambio de base de datos
 
-Define configuraciones del editor, por ejemplo:
+El cambio entre MySQL y PostgreSQL se realiza:
 
-- Variables de entorno
-- Formato de código
-- Configuración del proyecto
-
-Ejemplo:
-
-```json
-{
-  "java.configuration.updateBuildConfiguration": "automatic"
-}
-```
+1. Seleccionando el archivo `.env` correspondiente  
+2. Ejecutando la aplicación con ese archivo  
+3. La app usa automáticamente la configuración definida  
 
 ---
 
-### 🚀 `launch.json` (opcional)
+## 🛠 Carpeta `.vscode`
 
-Permite ejecutar y depurar la aplicación desde VS Code.
+Contiene la configuración para ejecutar el proyecto desde Visual Studio Code.
 
-Ejemplo:
+---
+
+## 🚀 `launch.json`
+
+### 📌 Propósito
+Permite ejecutar la aplicación desde VS Code con una configuración específica.
+
+---
+
+### ⚙️ Funcionamiento paso a paso
+
+1. VS Code lee el archivo `launch.json`  
+2. Se define qué clase principal ejecutar  
+3. Se pueden definir variables de entorno  
+4. Se lanza la aplicación con esa configuración  
+
+---
+
+### 🛠 Ejemplo
 
 ```json
 {
@@ -112,9 +108,17 @@ Ejemplo:
   "configurations": [
     {
       "type": "java",
-      "name": "Run App",
+      "name": "Run with MySQL",
       "request": "launch",
-      "mainClass": "com.example.Main"
+      "mainClass": "com.example.Main",
+      "envFile": "${workspaceFolder}/selected_db/.env/mysql.env"
+    },
+    {
+      "type": "java",
+      "name": "Run with PostgreSQL",
+      "request": "launch",
+      "mainClass": "com.example.Main",
+      "envFile": "${workspaceFolder}/selected_db/.env/postgresql.env"
     }
   ]
 }
@@ -122,23 +126,20 @@ Ejemplo:
 
 ---
 
-## 🔄 Integración `.env` + `.vscode`
+## 🔄 Flujo completo
 
-1. `.env` define las variables de entorno  
-2. `.vscode` puede usarlas para ejecutar el proyecto  
-3. VS Code lanza la aplicación con esa configuración  
-4. La app usa esos valores para conectarse a la base de datos  
+1. Se elige una configuración en `launch.json`  
+2. VS Code carga el archivo `.env` correspondiente  
+3. Se inyectan las variables de entorno  
+4. La aplicación arranca  
+5. Se conecta a la base de datos seleccionada  
 
 ---
 
 ## ✅ Resumen
 
-- `.env` → Configuración dinámica (variables de entorno)  
-- `.vscode` → Configuración del entorno de desarrollo  
-- Ambos trabajan juntos para facilitar el desarrollo y la conexión a la base de datos  
+- `mysql.env` → Configuración para MySQL  
+- `postgresql.env` → Configuración para PostgreSQL  
+- `launch.json` → Permite elegir cuál usar al ejecutar  
 
 ---
-
-## ✍️ Autor
-
-Proyecto Apuntes_Java
