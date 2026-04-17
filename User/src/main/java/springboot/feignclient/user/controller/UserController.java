@@ -17,9 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import springboot.feignclient.user.dto.LoginUserDto;
 import springboot.feignclient.user.dto.MailDto;
@@ -57,12 +56,40 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/login")
-    @Operation(summary = "Iniciar sesión de usuario", description = "Permite a un usuario iniciar sesión proporcionando su nombre y contraseña")
-    public ResponseEntity<String> loginUser(@RequestBody LoginUserDto loginUserDto) {
-        String response = userService.insertPasword(loginUserDto);
+    /**
+     * Ejemplo recomendado para login: la contraseña viaja en el body y no en la URL.
+     * Sirve para comparar con los otros ejemplos que has dejado como apuntes.
+     * @param loginUserDto
+     * @return
+     */
+    @PostMapping("/login/secure")
+    @Operation(summary = "Iniciar sesión de usuario de forma más segura", description = "Ejemplo recomendado de login usando POST y RequestBody para no exponer la contraseña en la URL")
+    public ResponseEntity<String> loginUserSecure1(@RequestBody @Valid LoginUserDto loginUserDto) {
+        String response = userService.insertPassword(loginUserDto);
         return ResponseEntity.ok(response);
     }
+
+    /**
+     * No es seguro para hacer un login, ya que la contraseña viaja en la URL como parámetro, lo cual puede ser registrado en logs o cacheado por navegadores.
+     * @param name
+     * @param password
+     * @return
+     */
+    @GetMapping("/login/version2")
+    @Operation(summary = "Iniciar sesión de usuario version 2", description = "Permite a un usuario iniciar sesión proporcionando su nombre y contraseña")
+    public ResponseEntity<String> loginUserParam(@RequestParam @NotBlank String name, @RequestParam @NotBlank String password) {
+        LoginUserDto loginUserDto = new LoginUserDto(name, password);
+        String response = userService.insertPassword(loginUserDto);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/password")
+    @Operation(summary = "Cambiar la contraseña de un usuario", description = "Permite a un usuario actualizar su contraseña proporcionando su nombre, contraseña actual y nueva contraseña")
+    public ResponseEntity<LoginUserDto> updatePassword(@RequestBody @Valid LoginUserDto loginUserDto) {
+        LoginUserDto response = userService.changePassword(loginUserDto);
+        return ResponseEntity.ok(response);
+    }
+    
 
     @PostMapping
     @Operation(summary = "Crear un nuevo usuario", description = "Crea y guarda un nuevo usuario en el sistema")

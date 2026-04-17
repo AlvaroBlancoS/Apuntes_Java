@@ -57,18 +57,43 @@ public class UserService {
                 .build();
     }
 
-    public String insertPasword(LoginUserDto loginUserDto) {
+    public String insertPassword(LoginUserDto loginUserDto) {
         User user = userRepository.findByName(loginUserDto.getUserName())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
+   
+                System.out.println("Contraseña proporcionada: " + loginUserDto.getPassword());
         boolean isValid = passwordEncoder.matches(
                 loginUserDto.getPassword(),
                 user.getPassword());
+        
         if (!isValid) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Contraseña incorrecta");
         }
 
         return "Login exitoso";
+    }
+
+    public LoginUserDto changePassword(LoginUserDto loginUserDto) {
+        User user = userRepository.findByName(loginUserDto.getUserName())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+
+        String encodedPassword = passwordEncoder.encode(loginUserDto.getPassword());
+
+        boolean isValid = passwordEncoder.matches(
+                loginUserDto.getPassword(),
+                user.getPassword());
+
+        if (isValid) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La nueva contraseña no puede ser igual a la contraseña actual");
+        }
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+
+        return LoginUserDto.builder()
+                .userName(user.getName())
+                .password(encodedPassword)
+                .build();
     }
 
     public UserDto createUser(UserDto dto) {
@@ -116,11 +141,10 @@ public class UserService {
         return false;
     }
 
-
     public MailDto getUserEmailByName(String name) {
         User user = userRepository.findByName(name)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
-        MailDto mailRquest = mapperUser.getMailById(user.getMailId());     
+        MailDto mailRquest = mapperUser.getMailById(user.getMailId());
         return MailDto.builder()
                 .id(mailRquest.getId())
                 .mail(mailRquest.getMail())
