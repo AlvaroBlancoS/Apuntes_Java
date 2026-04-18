@@ -313,3 +313,8 @@ Eso hace que:
 - `User` siga siendo responsable de usuarios
 - `Mail` siga siendo responsable de correos
 - ambos proyectos colaboren sin mezclar sus repositorios ni sus tablas
+
+## 9. Dependencia Feign Client
+Dejo un enlace sobre la dependencia de feign client. Es muy importante que cada proyecto debe poner una dependencia para su funcionamiento.
+- [Estructura de los pom.xml y feign client](https://github.com/AlvaroBlancoS/Apuntes_Java/tree/spring_boot/feign_client)
+  
