@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import lombok.RequiredArgsConstructor;
+import springboot.feignclient.user.dto.ChangePasswordDto;
 import springboot.feignclient.user.dto.LoginUserDto;
 import springboot.feignclient.user.dto.MailDto;
 import springboot.feignclient.user.dto.UserDto;
@@ -61,12 +62,11 @@ public class UserService {
         User user = userRepository.findByName(loginUserDto.getUserName())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
-   
-                System.out.println("Contraseña proporcionada: " + loginUserDto.getPassword());
+        System.out.println("Contraseña proporcionada: " + loginUserDto.getPassword());
         boolean isValid = passwordEncoder.matches(
                 loginUserDto.getPassword(),
                 user.getPassword());
-        
+
         if (!isValid) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Contraseña incorrecta");
         }
@@ -74,6 +74,14 @@ public class UserService {
         return "Login exitoso";
     }
 
+    /**
+     * No es recomendable usar el mismo endpoint para login y cambio de contraseña,
+     * ya que ambos requieren la contraseña actual para validar la identidad del
+     * usuario.
+     * 
+     * @param loginUserDto
+     * @return
+     */
     public LoginUserDto changePassword(LoginUserDto loginUserDto) {
         User user = userRepository.findByName(loginUserDto.getUserName())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
@@ -85,7 +93,8 @@ public class UserService {
                 user.getPassword());
 
         if (isValid) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "La nueva contraseña no puede ser igual a la contraseña actual");
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "La nueva contraseña no puede ser igual a la contraseña actual");
         }
         user.setPassword(encodedPassword);
         userRepository.save(user);
@@ -94,6 +103,42 @@ public class UserService {
                 .userName(user.getName())
                 .password(encodedPassword)
                 .build();
+    }
+    /**
+     * Este método es una versión mejorada del cambio de contraseña, 
+     * que incluye validaciones adicionales para garantizar 
+     * la seguridad y la integridad de la operación.
+     * @param dto
+     * @return
+     */
+    public String changePasswordSecure(ChangePasswordDto dto) {
+        User user = userRepository.findByName(dto.getUserName())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+
+        boolean currentPasswordMatches = passwordEncoder.matches(
+                dto.getCurrentPassword(),
+                user.getPassword());
+
+        if (!currentPasswordMatches) {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED, "La contraseña actual no es correcta");
+        }
+
+        boolean samePassword = passwordEncoder.matches(
+                dto.getNewPassword(),
+                user.getPassword());
+
+        if (samePassword) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "La nueva contraseña no puede ser igual a la actual");
+        }
+
+        String encodedNewPassword = passwordEncoder.encode(dto.getNewPassword());
+        user.setPassword(encodedNewPassword);
+        userRepository.save(user);
+
+        return "Contraseña actualizada correctamente";
     }
 
     public UserDto createUser(UserDto dto) {
@@ -113,6 +158,24 @@ public class UserService {
         User updatedUser = mapperUser.updateUser(dto, existingUser);
         User savedUser = userRepository.save(updatedUser);
         return mapperUser.convertToDto(savedUser);
+    }
+
+    public MailDto getUserEmailByName(String name) {
+        User user = userRepository.findByName(name)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+        MailDto mailRquest = mapperUser.getMailById(user.getMailId());
+        return MailDto.builder()
+                .id(mailRquest.getId())
+                .mail(mailRquest.getMail())
+                .description(mailRquest.getDescription())
+                .build();
+    }
+
+    public UserDto getUserByEmail(String email) {
+        MailDto mail = mapperUser.getMailByName(email);
+        User user = userRepository.findByMailId(mail.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+        return mapperUser.convertToDto(user);
     }
 
     public void deleteUserById(UUID id) {
@@ -141,14 +204,4 @@ public class UserService {
         return false;
     }
 
-    public MailDto getUserEmailByName(String name) {
-        User user = userRepository.findByName(name)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
-        MailDto mailRquest = mapperUser.getMailById(user.getMailId());
-        return MailDto.builder()
-                .id(mailRquest.getId())
-                .mail(mailRquest.getMail())
-                .description(mailRquest.getDescription())
-                .build();
-    }
 }

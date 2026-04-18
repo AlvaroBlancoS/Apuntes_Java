@@ -21,7 +21,6 @@ public class Mapper {
     private final MailFeignClient mailFeignClient;
     private final PasswordEncoder passwordEncoder;
 
-
     public User convertToEntity(UserDto dto) {
         return User.builder()
                 .name(dto.getName())
@@ -40,7 +39,8 @@ public class Mapper {
 
     public User updateUser(UserDto dto, User entity) {
         entity.setName(dto.getName() != null ? dto.getName() : entity.getName());
-        entity.setPassword(dto.getPassword() != null ? passwordEncoder.encode(dto.getPassword()) : entity.getPassword());
+        entity.setPassword(
+                dto.getPassword() != null ? passwordEncoder.encode(dto.getPassword()) : entity.getPassword());
         entity.setMailId(dto.getMailId() != null ? getMailById(dto.getMailId()).getId() : entity.getMailId());
         return entity;
     }
@@ -50,6 +50,15 @@ public class Mapper {
             return mailFeignClient.getMailById(idMail);
         } catch (FeignException.NotFound e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El mail con id " + idMail + " no existe");
+        }
+    }
+
+    public MailDto getMailByName(String name) {
+        try {
+            return mailFeignClient.getMailByName(name);
+
+        } catch (FeignException.NotFound e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El mail con nombre " + name + " no existe");
         }
     }
 }

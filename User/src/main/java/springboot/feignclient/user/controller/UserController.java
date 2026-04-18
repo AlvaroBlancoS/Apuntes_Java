@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
+import springboot.feignclient.user.dto.ChangePasswordDto;
 import springboot.feignclient.user.dto.LoginUserDto;
 import springboot.feignclient.user.dto.MailDto;
 import springboot.feignclient.user.dto.UserDto;
@@ -37,9 +38,17 @@ public class UserController {
     @Operation(summary = "Obtener todos los usuarios", description = "Devuelve una lista de todos los usuarios registrados, ordenados por ID ascendente o descendente")
     public List<UserDto> getAllUsers(@RequestParam(defaultValue = "id,asc") String sort) {
         String[] sortParams = sort.split(",");
-        Sort.Direction direction = sortParams.length > 1 && "desc".equalsIgnoreCase(sortParams[1]) ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort.Direction direction = sortParams.length > 1 && "desc".equalsIgnoreCase(sortParams[1]) ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
         Sort sortObj = Sort.by(direction, sortParams[0]);
         return userService.getAllUsers(sortObj);
+    }
+
+    @GetMapping("/name/{name}")
+    @Operation(summary = "Obtener un usuario por nombre", description = "Devuelve el usuario correspondiente al nombre proporcionado")
+    public ResponseEntity<UserDto> getUserByName(@PathVariable String name) {
+        UserDto user = userService.getUserByName(name);
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/{id}")
@@ -48,17 +57,12 @@ public class UserController {
         UserDto user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
-    
-    @GetMapping("/name/{name}")
-    @Operation(summary = "Obtener un usuario por nombre", description = "Devuelve el usuario correspondiente al nombre proporcionado")
-    public ResponseEntity<UserDto> getUserByName(@PathVariable String name) {
-        UserDto user = userService.getUserByName(name);
-        return ResponseEntity.ok(user);
-    }
 
     /**
-     * Ejemplo recomendado para login: la contraseña viaja en el body y no en la URL.
+     * Ejemplo recomendado para login: la contraseña viaja en el body y no en la
+     * URL.
      * Sirve para comparar con los otros ejemplos que has dejado como apuntes.
+     * 
      * @param loginUserDto
      * @return
      */
@@ -70,26 +74,50 @@ public class UserController {
     }
 
     /**
-     * No es seguro para hacer un login, ya que la contraseña viaja en la URL como parámetro, lo cual puede ser registrado en logs o cacheado por navegadores.
+     * No es seguro para hacer un login, ya que la contraseña viaja en la URL como
+     * parámetro, lo cual puede ser registrado en logs o cacheado por navegadores.
+     * 
      * @param name
      * @param password
      * @return
      */
     @GetMapping("/login/version2")
     @Operation(summary = "Iniciar sesión de usuario version 2", description = "Permite a un usuario iniciar sesión proporcionando su nombre y contraseña")
-    public ResponseEntity<String> loginUserParam(@RequestParam @NotBlank String name, @RequestParam @NotBlank String password) {
+    public ResponseEntity<String> loginUserParam(@RequestParam @NotBlank String name,
+            @RequestParam @NotBlank String password) {
         LoginUserDto loginUserDto = new LoginUserDto(name, password);
         String response = userService.insertPassword(loginUserDto);
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/password")
-    @Operation(summary = "Cambiar la contraseña de un usuario", description = "Permite a un usuario actualizar su contraseña proporcionando su nombre, contraseña actual y nueva contraseña")
+    /**
+     * Cambia la contraseña de un usuario, pero no es recomendable usar el mismo endpoint para login y 
+     * cambio de contraseña, ya que ambos requieren la contraseña actual para validar la identidad del usuario. 
+     * Es mejor tener endpoints separados para cada función para mayor claridad y seguridad.
+     * @param loginUserDto
+     * @return
+     */
+    @PutMapping("/changePassword")
+    @Operation(summary = "Cambiar la contraseña de un usuario de version no recomendada", description = "Permite a un usuario actualizar su contraseña proporcionando su nombre, contraseña actual y nueva contraseña")
     public ResponseEntity<LoginUserDto> updatePassword(@RequestBody @Valid LoginUserDto loginUserDto) {
         LoginUserDto response = userService.changePassword(loginUserDto);
         return ResponseEntity.ok(response);
     }
-    
+
+    /**
+     * Este método es una versión mejorada del cambio de contraseña, 
+     * que incluye validaciones adicionales para garantizar la seguridad y 
+     * la integridad de la operación. Se recomienda usar este enfoque en 
+     * lugar del método anterior para el cambio de contraseña.
+     * @param ChangePasswordDto
+     * @return
+     */
+    @PutMapping("/changePassword/secure")
+    @Operation(summary = "Cambiar la contraseña de un usuario de forma más segura", description = "Permite a un usuario actualizar su contraseña proporcionando su nombre, contraseña actual y nueva contraseña, con validaciones adicionales para mayor seguridad")
+    public ResponseEntity<String> updatePasswordSecure(@RequestBody @Valid ChangePasswordDto changePasswordDto) {
+        String response = userService.changePasswordSecure(changePasswordDto);
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping
     @Operation(summary = "Crear un nuevo usuario", description = "Crea y guarda un nuevo usuario en el sistema")
@@ -104,21 +132,6 @@ public class UserController {
         UserDto updatedUser = userService.updateUser(dto);
         return ResponseEntity.ok(updatedUser);
     }
-
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Eliminar un usuario por ID", description = "Elimina un usuario específico basado en su ID")
-    public ResponseEntity<Void> deleteUserById(@PathVariable UUID id) {
-        userService.deleteUserById(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @DeleteMapping("/name/{name}")
-    @Operation(summary = "Eliminar un usuario por nombre", description = "Elimina un usuario específico basado en su nombre")
-    public ResponseEntity<Void> deleteUserByName(@PathVariable String name) {
-        userService.deleteUserByName(name);
-        return ResponseEntity.noContent().build();
-    }
-
 
     @GetMapping("/name/{name}/email")
     @Operation(summary = "Obtener el correo electrónico de un usuario por nombre", description = "Devuelve el correo electrónico de un usuario específico basado en su nombre")
@@ -139,6 +152,28 @@ public class UserController {
     public ResponseEntity<String> getUserNameById(@PathVariable UUID id) {
         String name = userService.getUserById(id).getName();
         return ResponseEntity.ok(name);
+    }
+
+    @GetMapping("/email/{email}")
+    @Operation(summary = "Obtener el nombre de un usuario por correo electrónico", description = "Devuelve el nombre de un usuario específico basado en su correo electrónico")
+    public ResponseEntity<UserDto> getUserNameByEmail(@PathVariable String email) {
+        UserDto userDto = userService.getUserByEmail(email);
+        return ResponseEntity.ok(userDto);
+    }
+
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar un usuario por ID", description = "Elimina un usuario específico basado en su ID")
+    public ResponseEntity<Void> deleteUserById(@PathVariable UUID id) {
+        userService.deleteUserById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/name/{name}")
+    @Operation(summary = "Eliminar un usuario por nombre", description = "Elimina un usuario específico basado en su nombre")
+    public ResponseEntity<Void> deleteUserByName(@PathVariable String name) {
+        userService.deleteUserByName(name);
+        return ResponseEntity.noContent().build();
     }
 
 }
