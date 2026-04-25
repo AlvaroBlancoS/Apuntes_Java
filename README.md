@@ -178,7 +178,7 @@ Este workspace es un proyecto Maven multi-modulo con dos microservicios Spring B
 - `Mail`: expone y gestiona el recurso de correos electronicos.
 - `User`: gestiona usuarios y consume `Mail` mediante OpenFeign.
 
- [Dejo un enlace de cómo funciona feign client: ](https://github.com/AlvaroBlancoS/Apuntes_Java/tree/spring_boot/feign_client/User/src/main/java/springboot/feignclient/user/client)
+ Dejo un enlace de cómo funciona: [feign client](https://github.com/AlvaroBlancoS/Apuntes_Java/tree/spring_boot/feign_client/User/src/main/java/springboot/feignclient/user/client)
 
 ### Vista general
 
