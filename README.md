@@ -171,15 +171,14 @@ Lo que hace es organizar y compartir configuración.
 
 Para que Feign funcione correctamente, el módulo hijo que vaya a consumir otro servicio debe declarar la dependencia de OpenFeign y configurar su cliente.
 
-## 9. [Cómo funciona Feign Client ](https://github.com/AlvaroBlancoS/Apuntes_Java/tree/spring_boot/feign_client/User/src/main/java/springboot/feignclient/user/client)
-
-
-## 10. Arquitectura de los proyectos Mail y User
+## 9. Arquitectura de los proyectos Mail y User
 
 Este workspace es un proyecto Maven multi-modulo con dos microservicios Spring Boot:
 
 - `Mail`: expone y gestiona el recurso de correos electronicos.
 - `User`: gestiona usuarios y consume `Mail` mediante OpenFeign.
+
+ [Dejo un enlace de cómo funciona feign client: ](https://github.com/AlvaroBlancoS/Apuntes_Java/tree/spring_boot/feign_client/User/src/main/java/springboot/feignclient/user/client)
 
 ### Vista general
 
@@ -438,7 +437,7 @@ La arquitectura sigue un estilo de microservicios simple:
 - La union real entre ambos dominios se hace por `UUID` y llamadas REST, no por relacion JPA compartida.
 -------------------------------------
 
-## 11 Propuesta de libreria comun para evitar duplicacion
+## 10. Propuesta de libreria comun para evitar duplicacion
 
 En la arquitectura actual hay varias piezas repetidas entre `Mail` y `User`. Esto funciona para una practica pequena, pero en el siguiente proyecto conviene extraer lo compartido a una libreria comun para reducir duplicacion, centralizar mantenimiento y hacer la arquitectura mas limpia.
 
