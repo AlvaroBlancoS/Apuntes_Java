@@ -6,17 +6,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- POM PADRE -->
-    <groupId>springboot.feignclient</groupId>
+    <groupId>springboot.resttemplate</groupId>
     <artifactId>workspace-parent</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <modules>
+        <module>CommonBookstore</module>
         <module>Mail</module>
         <module>User</module>
     </modules>
 
     <properties>
+        <workspace.version>1.0.0</workspace.version>
         <java.version>17</java.version>
         <spring.boot.version>3.3.5</spring.boot.version>
         <lombok.version>1.18.20</lombok.version>
@@ -60,6 +62,12 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>2.5.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.commonbookstore</groupId>
+                <artifactId>CommonBookstore</artifactId>
+                <version>${workspace.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

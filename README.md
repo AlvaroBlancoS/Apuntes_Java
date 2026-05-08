@@ -1,227 +1,137 @@
-# Apuntes de Spring Boot Feign Client
+# Apuntes de Spring Boot con Maven Multi-modulo
 
-Este workspace está organizado como un proyecto Maven multi-módulo con dos aplicaciones:
+Este workspace esta organizado como un proyecto Maven multi-modulo con tres modulos:
 
+- `CommonBookstore`
 - `Mail`
 - `User`
 
-La idea general es que `User` consume endpoints HTTP de `Mail` usando `Feign Client`.
+El objetivo general es:
 
-## Estructura de los `pom.xml`
+- `Mail` expone recursos REST de correo
+- `User` consume esos recursos desde otro microservicio
+- `CommonBookstore` centraliza contratos y componentes compartidos
 
-En este proyecto hay un `pom` padre y dos `pom` hijos:
+## 1. Diagrama: pom padre e hijos
 
-- `pom.xml` en la raíz
-- `Mail/pom.xml`
-- `User/pom.xml`
+El `pom` padre real del proyecto es el `pom.xml` de la raiz.
 
-## 1. `pom.xml` padre
+Los tres modulos cuelgan de ese padre:
 
-El archivo raíz `pom.xml` actúa como padre del workspace.
-
-Su función principal es:
-
-- agrupar los módulos `Mail` y `User`
-- compartir configuración común
-- centralizar versiones
-
-En el padre aparece:
-
-```xml
-<packaging>pom</packaging>
+```mermaid
+flowchart TD
+    ROOT["pom.xml raiz"]
+    ROOT --> MAIL["Mail/pom.xml"]
+    ROOT --> USER["User/pom.xml"]
 ```
 
-Eso significa que el proyecto raíz no genera un `jar` ejecutable, sino que sirve para coordinar módulos.
+## Como entenderlo sin confundirse
 
-También aparecen:
+Hay dos relaciones distintas:
 
-```xml
-<modules>
-    <module>Mail</module>
-    <module>User</module>
-</modules>
+### Herencia Maven
+
+- el padre es el `pom.xml` de la raiz
+- `CommonBookstore`, `Mail` y `User` son hijos de ese padre
+
+### Dependencias entre modulos
+
+- `Mail` depende de `CommonBookstore`
+- `User` depende de `CommonBookstore`
+- `User` consume por HTTP al servicio `Mail`
+
+Diagrama de dependencias funcionales:
+
+```mermaid
+flowchart LR
+    COMMON["CommonBookstore"] --> MAIL["Mail"]
+    COMMON --> USER["User"]
+    USER --> API["Mail API por HTTP"]
 ```
 
-Con esto Maven sabe que el workspace está formado por esos dos subproyectos.
+## 2. Por que necesitamos la libreria `CommonBookstore`
 
-Además, el padre define propiedades y dependencias comunes, por ejemplo:
+La libreria `CommonBookstore` aparece para evitar duplicacion entre modulos.
 
-- `java.version`
-- `spring.boot.version`
-- `lombok.version`
+Antes habia codigo repetido o facilmente repetible en varios proyectos, por ejemplo:
 
-Y dentro de `dependencyManagement` fija versiones para que los hijos no tengan que repetirlas continuamente.
+- `MailDto`
+- `GlobalExceptionHandler`
+- estructura comun para errores
+- configuraciones o contratos reutilizables
 
-## 2. `pom.xml` hijos
+## Problema sin libreria comun
 
-Tanto `Mail/pom.xml` como `User/pom.xml` heredan del padre mediante:
+Si cada microservicio define por separado las mismas clases:
 
-```xml
-<parent>
-    <groupId>springboot.feignclient</groupId>
-    <artifactId>workspace-parent</artifactId>
-    <version>1.0.0</version>
-    <relativePath>../pom.xml</relativePath>
-</parent>
+- se duplica codigo
+- aumenta el mantenimiento
+- puede haber inconsistencias entre proyectos
+- un cambio en un contrato obliga a recordar actualizar varios sitios
+
+Ejemplo claro:
+
+- `User` necesitaba usar `MailDto`
+- pero `MailDto` pertenece al contrato del recurso `Mail`
+- duplicarlo dentro de `User` era una mala señal de diseno
+
+## Solucion con `CommonBookstore`
+
+Con la libreria comun:
+
+- `MailDto` vive en un solo sitio
+- el manejo comun de errores tambien puede vivir en un solo sitio
+- `Mail` y `User` reutilizan el mismo contrato
+- el proyecto queda mejor preparado para crecer
+
+## Que tipo de cosas van bien en `CommonBookstore`
+
+- DTOs compartidos
+- respuestas de error comunes
+- `GlobalExceptionHandler`
+- configuraciones tecnicas reutilizables
+- enums, validaciones y utilidades transversales
+
+## Que cosas no conviene meter ahi sin pensarlo bien
+
+- logica de negocio especifica de `Mail`
+- logica de negocio especifica de `User`
+- controladores
+- servicios de dominio
+- entidades JPA completas si eso acopla demasiado los microservicios
+
+La idea sana es:
+
+- compartir contratos
+- compartir infraestructura comun
+- no mezclar dominios que deberian seguir separados
+
+## 3. Como se usa `RestTemplate` entre `User` y `Mail`
+
+Ahora mismo el proyecto `User` consume el proyecto `Mail` usando `RestTemplate`.
+
+La logica del cliente HTTP esta dentro del paquete `client` de `User`.
+
+Enlace directo a la guia:
+
+- [Guia de RestTemplate en User/client](E:\MiGitHub\Apuntes_Java\User\src\main\java\springboot\resttemplate\user\client\README.md)
+
+## Resumen rapido del flujo
+
+```mermaid
+flowchart LR
+    A["Cliente externo"] --> B["UserController"]
+    B --> C["UserService"]
+    C --> D["Mapper"]
+    D --> E["MailRestTemplateClient"]
+    E --> F["Mail API<br/>http://localhost:8080/api/mail"]
 ```
 
-Esto permite que ambos módulos:
+## Idea final
 
-- reutilicen configuración común
-- compartan versiones
-- mantengan una estructura más limpia
+Este workspace se entiende mejor si lo separas mentalmente asi:
 
-Después, cada hijo añade sus propias dependencias según su responsabilidad.
-
-## 3. Qué aporta cada hijo
-
-### `Mail`
-
-`Mail` es el microservicio que expone endpoints como:
-
-- `GET /api/mail/{id}`
-- `GET /api/mail/name/{name}`
-
-Su trabajo es gestionar correos electrónicos y devolver datos de tipo `MailDto`.
-
-### `User`
-
-`User` es el microservicio que gestiona usuarios y, además, consume datos del proyecto `Mail`.
-
-Aquí es donde aparece el uso real de `Feign Client`, porque `User` necesita llamar a:
-
-- `GET /api/mail/{id}`
-- `GET /api/mail/name/{name}`
-
-para validar o recuperar información de correo.
-
-## 4. Dependencia necesaria para Feign Client
-
-Para que Feign funcione en un módulo, ese módulo debe incluir la dependencia:
-
-```xml
-<dependency>
-    <groupId>org.springframework.cloud</groupId>
-    <artifactId>spring-cloud-starter-openfeign</artifactId>
-</dependency>
-```
-
-Y además suele importar el BOM de Spring Cloud en `dependencyManagement`:
-
-```xml
-<dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-dependencies</artifactId>
-            <version>2023.0.1</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
-```
-
-## 5. Importante sobre los hijos y Feign
-
-En esta práctica, los dos hijos tienen declarada la dependencia de OpenFeign en sus `pom.xml`.
-
-Eso puede venir bien como apunte porque deja ambos módulos preparados para usar clientes Feign.
-
-Pero siendo precisos:
-
-- el módulo que consume otro servicio sí necesita `spring-cloud-starter-openfeign`
-- el módulo que solo expone endpoints no tiene por qué necesitarla
-
-En este proyecto, el consumidor claro es `User`, porque define:
-
-- `MailFeignClient`
-
-Por tanto, para que esta integración funcione de verdad, el hijo `User` sí debe incluir esa dependencia.
-
-`Mail` no la necesita por exponer controladores, sino solo si también fuera a consumir otro microservicio mediante Feign.
-
-## 6. Feign Client y RestTemplate
-
-`Feign Client` y `RestTemplate` sirven para lo mismo en el fondo: consumir otra API HTTP desde tu aplicación. La diferencia está en cómo lo haces.
-
-Con `RestTemplate` escribes tú la llamada manualmente:
-
-```java
-RestTemplate restTemplate = new RestTemplate();
-MailDto mail = restTemplate.getForObject(
-    "http://localhost:8080/api/mail/{id}",
-    MailDto.class,
-    id
-);
-```
-
-Con `Feign Client` declaras una interfaz y Spring genera la llamada por ti:
-
-```java
-@FeignClient(name = "mail-service", url = "http://localhost:8080")
-public interface MailFeignClient {
-
-    @GetMapping("/api/mail/{id}")
-    MailDto getMailById(@PathVariable("id") UUID id);
-}
-```
-
-La idea práctica es esta:
-
-- `RestTemplate`: estilo imperativo, más manual
-- `Feign Client`: estilo declarativo, más limpio y parecido a llamar un método Java
-
-### Qué suele gustar de `Feign`
-
-- menos código repetitivo
-- más legible en microservicios
-- el cliente queda separado en una interfaz
-- encaja muy bien cuando llamas a varios endpoints de otro servicio
-
-### Qué tiene de bueno `RestTemplate`
-
-- te ayuda a entender mejor qué está pasando
-- controlas la petición de forma más explícita
-- es útil como aprendizaje base de llamadas HTTP
-
-### Lo importante
-
-- `RestTemplate` fue durante años la opción clásica en Spring
-- hoy en día suele preferirse `Feign Client` en arquitecturas de microservicios
-- si no usas Feign, la alternativa moderna en Spring suele ser `WebClient`, más que `RestTemplate`
-
-Para resumirlo de forma sencilla:
-
-- `RestTemplate` = yo construyo la llamada HTTP
-- `Feign Client` = declaro la interfaz y Spring construye la llamada
-
-## 7. Relación entre padre e hijos
-
-La idea práctica es esta:
-
-- el `pom` padre organiza el workspace
-- cada hijo hereda del padre
-- cada hijo declara sus dependencias concretas
-- `User` añade lo necesario para consumir `Mail` con Feign
-
-Dicho de otra forma:
-
-- el padre comparte estructura
-- los hijos implementan comportamiento
-
-## 8. Flujo resumido de Feign en este workspace
-
-1. `Mail` publica endpoints REST.
-2. `User` declara una interfaz `MailFeignClient`.
-3. `User` llama a `Mail` como si fuera un método Java normal.
-4. OpenFeign convierte esa llamada en una petición HTTP real.
-5. La respuesta se transforma en `MailDto`.
-
-## 9. Idea clave
-
-El `pom` padre no hace que Feign funcione por sí solo.
-
-Lo que hace es organizar y compartir configuración.
-
-Para que Feign funcione correctamente, el módulo hijo que vaya a consumir otro servicio debe declarar la dependencia de OpenFeign y configurar su cliente.
+- `pom.xml` raiz: organiza y gobierna el multi-modulo
+- `CommonBookstore`: comparte piezas comunes
+- `Mail`: expone el dominio de correo
+- `User`: gestiona usuarios y consulta `Mail` con `RestTemplate`

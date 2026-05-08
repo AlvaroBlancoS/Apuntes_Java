@@ -7,14 +7,14 @@
 
 
     <parent>
-        <groupId>springboot.feignclient</groupId>
+        <groupId>springboot.resttemplate</groupId>
         <artifactId>workspace-parent</artifactId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
 
-    <groupId>springboot.feignclient</groupId>
+    <groupId>springboot.resttemplate</groupId>
     <artifactId>Mail</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
@@ -126,6 +126,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.commonbookstore</groupId>
+            <artifactId>CommonBookstore</artifactId>
         </dependency>
     </dependencies>
     
