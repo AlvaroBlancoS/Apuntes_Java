@@ -1,7 +1,10 @@
 package springboot.resttemplate.user.entity;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,4 +40,13 @@ public class User {
 
     @Column(name = "mail_id", nullable = false)
     private UUID mailId;
+
+    @CreationTimestamp
+    @Column(name = "created_time", nullable = false, updatable = false)
+    private LocalDateTime createdTime;
+
+    @UpdateTimestamp
+    @Column(name = "update_time")
+    private LocalDateTime updateTime;
+
 }
