@@ -68,3 +68,113 @@ En `Mail`, estos atributos sirven para auditar el registro:
 
 - cuando se creo
 - cuando se modifico por ultima vez
+
+## Timestamp with timezone
+
+```java
+    @JdbcTypeCode(SqlTypes.TIMESTAMP_WITH_TIMEZONE)
+    private OffsetDateTime createdTime;
+
+    @JdbcTypeCode(SqlTypes.TIMESTAMP_WITH_TIMEZONE)
+    private OffsetDateTime updatedTime;
+
+```
+La idea es:
+- `OffsetDateTime` incluye fecha, hora y offset/zona
+- `TIMESTAMP_WITH_TIMEZONE` indica que en base de datos quieres conservar esa información temporal con zona
+- Hibernate usa ese código para elegir el tipo JDBC correcto al leer y escribir
+ 
+Mentalmente:
+- `LocalDateTime` = fecha y hora “sin zona”
+- `OffsetDateTime` = fecha y hora “con offset”
+- `TIMESTAMP_WITH_TIMEZONE` encaja mejor con OffsetDateTime
+
+Por eso en Mail tiene sentido usarlo.
+
+ Qué pasa si no lo pones:
+-  a veces Hibernate lo infiere bien solo
+- pero con JdbcTypeCode(...) dejas explícito el tipo SQL/JDBC deseado
+- eso ayuda cuando quieres controlar mejor el mapeo o evitar ambigüedades según la BD
+- 
+Por tanto:
+- en Mail, `OffsetDateTime` + `TIMESTAMP_WITH_TIMEZONE` tiene mucho sentido
+- en User, como usas `LocalDateTime`, normalmente bastaría con `TIMESTAMP` y muchas veces ni siquiera hace falta anotarlo
+
+## ¿Qué es SqlTypes?
+
+`SqlTypes` es una clase de Hibernate que define constantes para indicar el tipo JDBC/SQL que se quiere usar al mapear un atributo Java hacia base de datos.
+
+### Chuletas de SqlTypes
+
+#### Tipos de texto
+
+- `VARCHAR`: texto variable de longitud normal.
+- `CHAR`: texto de longitud fija.
+- `LONGVARCHAR`: texto largo.
+- `NVARCHAR`: texto variable con soporte Unicode o juego nacional de caracteres.
+- `LONGNVARCHAR`: texto largo con soporte Unicode.
+
+#### Tipos numericos
+
+- `INTEGER`: numero entero estandar.
+- `BIGINT`: entero grande.
+- `SMALLINT`: entero pequeno.
+- `TINYINT`: entero muy pequeno.
+- `DECIMAL`: numero decimal exacto, util cuando importa la precision.
+- `NUMERIC`: parecido a `DECIMAL`, decimal exacto con precision controlada.
+- `FLOAT`: numero en coma flotante aproximado.
+- `REAL`: numero decimal aproximado de menor precision.
+- `DOUBLE`: numero decimal aproximado de doble precision.
+
+#### Tipos booleanos
+
+- `BOOLEAN`: valor verdadero o falso.
+- `BIT`: valor binario, a veces usado como booleano segun la base de datos.
+
+#### Tipos de fecha y hora
+
+- `DATE`: solo fecha.
+- `TIME`: solo hora.
+- `TIME_WITH_TIMEZONE`: hora con zona u offset.
+- `TIMESTAMP`: fecha y hora sin zona.
+- `TIMESTAMP_WITH_TIMEZONE`: fecha y hora con zona u offset.
+
+#### Tipos binarios
+
+- `BINARY`: datos binarios de longitud fija.
+- `VARBINARY`: datos binarios de longitud variable.
+- `LONGVARBINARY`: datos binarios largos.
+- `BLOB`: objeto binario grande, como imagenes, ficheros o contenido pesado.
+
+#### Tipos de texto grande
+
+- `CLOB`: texto muy grande.
+- `NCLOB`: texto muy grande con soporte Unicode.
+
+#### Tipos especiales o estructurados
+
+- `UUID`: identificador unico universal.
+- `JSON`: datos en formato JSON.
+- `ARRAY`: arreglo o coleccion de valores.
+- `XML`: datos en formato XML.
+- `JAVA_OBJECT`: objeto Java tratado como objeto complejo o serializado.
+
+#### Relacion rapida entre tipos Java y `SqlTypes`
+
+- `String` -> `VARCHAR`
+- `UUID` -> `UUID`
+- `LocalDateTime` -> `TIMESTAMP`
+- `OffsetDateTime` -> `TIMESTAMP_WITH_TIMEZONE`
+- `boolean` o `Boolean` -> `BOOLEAN`
+- texto largo -> `CLOB`
+- JSON -> `JSON`
+
+#### Aplicado a este proyecto
+
+- En [`User`](https://github.com/AlvaroBlancoS/Apuntes_Java/tree/spring_boot/rest_template/User/src/main/java/springboot/resttemplate/user/entity), `LocalDateTime` encaja bien con `TIMESTAMP`.
+- En `Mail`, `OffsetDateTime` encaja mejor con `TIMESTAMP_WITH_TIMEZONE`.
+
+## Idea clave
+
+`@JdbcTypeCode(...)` se usa cuando quieres dejar explicito como debe mapear Hibernate un atributo Java en la base de datos.
+
