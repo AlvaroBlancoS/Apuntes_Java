@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,10 +45,12 @@ public class User {
 
     @CreationTimestamp
     @Column(name = "created_time", nullable = false, updatable = false)
+    @JdbcTypeCode(SqlTypes.TIMESTAMP)
     private LocalDateTime createdTime;
 
     @UpdateTimestamp
     @Column(name = "update_time")
+    @JdbcTypeCode(SqlTypes.TIMESTAMP)
     private LocalDateTime updateTime;
 
 }
