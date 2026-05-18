@@ -35,7 +35,6 @@ public class UserDto {
 
     @Schema(description = "ID del Mail asociado", example = "123e4567-e89b-12d3-a456-426614174000", accessMode = Schema.AccessMode.WRITE_ONLY)
     @NotNull(message = "El Id de email es obligatorio")
-    @NotEmpty(message = "El correo electronico no puede estar vacio")
     private UUID mailId;
 
     @Schema(description = "Nombre del Mail asociado", example = "john.doe@example.com", accessMode = Schema.AccessMode.READ_ONLY)
