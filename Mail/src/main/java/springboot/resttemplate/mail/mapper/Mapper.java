@@ -22,6 +22,8 @@ public class Mapper {
                 .id(entity.getId())
                 .mail(entity.getMail())
                 .description(entity.getDescription())
+                .createdTime(entity.getCreatedTime())
+                .updatedTime(entity.getUpdatedTime())
                 .build();
     }
 

@@ -35,6 +35,8 @@ public class Mapper {
                 .id(entity.getId())
                 .name(entity.getName())
                 .mailDto(getMailById(entity.getMailId()))
+                .createdTime(entity.getCreatedTime())
+                .updateTime(entity.getUpdateTime())
                 .build();
     }
 

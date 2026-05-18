@@ -30,16 +30,24 @@ public class MailService {
                 .collect(Collectors.toList());
     }
 
+    public List<MailDto> getAllMails() {
+        List<Mail> mails = emailRepository.findAll();
+        return mails.stream()
+                .map(mapperEmail::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     public MailDto getMailByName(String name) {
         Mail mail = emailRepository.findByMail(name)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Correo electrónico no encontrado"));
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Correo electrónico no encontrado"));
         return mapperEmail.convertToDto(mail);
     }
 
-    public MailDto getMailById( UUID id) {
+    public MailDto getMailById(UUID id) {
         Mail mail = emailRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Correo electrónico no encontrado"));
+                        HttpStatus.NOT_FOUND, "Correo electrónico no encontrado"));
         return mapperEmail.convertToDto(mail);
     }
 
@@ -55,7 +63,8 @@ public class MailService {
 
     public MailDto updateMail(UUID id, MailDto dto) {
         Mail existingMail = emailRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Correo electrónico no encontrado"));
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Correo electrónico no encontrado"));
         Mail updatedMail = mapperEmail.updateMail(dto, existingMail);
         Mail savedMail = emailRepository.save(updatedMail);
         return mapperEmail.convertToDto(savedMail);

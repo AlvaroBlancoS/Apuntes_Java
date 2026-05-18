@@ -40,6 +40,12 @@ public class MailController {
         return mailService.getAllMails(sortObj);
     }
 
+    @GetMapping("/v2")
+    @Operation(summary = "Obtener todos los correos electrónicos v2", description = "Devuelve una lista de todos los correos electrónicos registrados")
+    public List<MailDto> getAllMailsv2() {
+        return mailService.getAllMails();
+    }
+
     @GetMapping("/{id}")
     @Operation(summary = "Obtener correo electrónico por ID", description = "Devuelve el correo electrónico correspondiente al ID proporcionado")
     public MailDto getMailById(@PathVariable UUID id) {
