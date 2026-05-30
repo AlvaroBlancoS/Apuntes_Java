@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import springboot.resttemplate.user.dto.ChangePasswordDto;
 import springboot.resttemplate.user.dto.LoginUserDto;
@@ -59,14 +58,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    /**
-     * Ejemplo recomendado para login: la contraseña viaja en el body y no en la
-     * URL.
-     * Sirve para comparar con los otros ejemplos que has dejado como apuntes.
-     * 
-     * @param loginUserDto
-     * @return
-     */
+
     @PostMapping("/login/secure")
     @Operation(summary = "Iniciar sesión de usuario de forma más segura", description = "Ejemplo recomendado de login usando POST y RequestBody para no exponer la contraseña en la URL")
     public ResponseEntity<String> loginUserSecure1(@RequestBody @Valid LoginUserDto loginUserDto) {
@@ -74,45 +66,6 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * No es seguro para hacer un login, ya que la contraseña viaja en la URL como
-     * parámetro, lo cual puede ser registrado en logs o cacheado por navegadores.
-     * 
-     * @param name
-     * @param password
-     * @return
-     */
-    @GetMapping("/login/version2")
-    @Operation(summary = "Iniciar sesión de usuario version 2", description = "Permite a un usuario iniciar sesión proporcionando su nombre y contraseña")
-    public ResponseEntity<String> loginUserParam(@RequestParam @NotBlank String name,
-            @RequestParam @NotBlank String password) {
-        LoginUserDto loginUserDto = new LoginUserDto(name, password);
-        String response = userService.insertPassword(loginUserDto);
-        return ResponseEntity.ok(response);
-    }
-
-    /**
-     * Cambia la contraseña de un usuario, pero no es recomendable usar el mismo endpoint para login y 
-     * cambio de contraseña, ya que ambos requieren la contraseña actual para validar la identidad del usuario. 
-     * Es mejor tener endpoints separados para cada función para mayor claridad y seguridad.
-     * @param loginUserDto
-     * @return
-     */
-    @PutMapping("/changePassword")
-    @Operation(summary = "Cambiar la contraseña de un usuario de version no recomendada", description = "Permite a un usuario actualizar su contraseña proporcionando su nombre, contraseña actual y nueva contraseña")
-    public ResponseEntity<LoginUserDto> updatePassword(@RequestBody @Valid LoginUserDto loginUserDto) {
-        LoginUserDto response = userService.changePassword(loginUserDto);
-        return ResponseEntity.ok(response);
-    }
-
-    /**
-     * Este método es una versión mejorada del cambio de contraseña, 
-     * que incluye validaciones adicionales para garantizar la seguridad y 
-     * la integridad de la operación. Se recomienda usar este enfoque en 
-     * lugar del método anterior para el cambio de contraseña.
-     * @param ChangePasswordDto
-     * @return
-     */
     @PutMapping("/changePassword/secure")
     @Operation(summary = "Cambiar la contraseña de un usuario de forma más segura", description = "Permite a un usuario actualizar su contraseña proporcionando su nombre, contraseña actual y nueva contraseña, con validaciones adicionales para mayor seguridad")
     public ResponseEntity<String> updatePasswordSecure(@RequestBody @Valid ChangePasswordDto changePasswordDto) {

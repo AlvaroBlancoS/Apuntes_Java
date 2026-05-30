@@ -22,13 +22,14 @@ public class UserDto {
     @Schema(description = "ID", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     private UUID id;
 
-    @Schema(description = "Nombre", example = "John Doe")
+    @Schema(description = "Nombre de usuario", example = "franco")
     @NotNull(message = "El nombre de usuario es obligatorio")
     @NotEmpty(message = "El nombre de usuario no puede estar vacío")
+    @Pattern(regexp = "^[a-z][a-z0-9._-]*$", message = "El nombre de usuario solo puede contener minúsculas, números, puntos, guiones y guiones bajos, sin espacios")
     private String name;
 
     @Schema(description = "Contraseña", example = "password123", accessMode = Schema.AccessMode.WRITE_ONLY)
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$", message = "La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un símbolo especial.")
+    // @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$", message = "La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un símbolo especial.")
     @NotNull(message = "La contraseña es obligatoria")
     @NotEmpty(message = "La contraseña no puede estar vacía")
     private String password;

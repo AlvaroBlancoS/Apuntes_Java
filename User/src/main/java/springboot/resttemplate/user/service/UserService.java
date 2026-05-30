@@ -56,6 +56,8 @@ public class UserService {
                 .id(mailRquest.getId())
                 .mail(mailRquest.getMail())
                 .description(mailRquest.getDescription())
+                .createdTime(mailRquest.getCreatedTime())
+                .updatedTime(mailRquest.getUpdatedTime())
                 .build();
     }
 
@@ -169,6 +171,8 @@ public class UserService {
                 .id(mailRquest.getId())
                 .mail(mailRquest.getMail())
                 .description(mailRquest.getDescription())
+                .createdTime(mailRquest.getCreatedTime())
+                .updatedTime(mailRquest.getUpdatedTime())
                 .build();
     }
 
