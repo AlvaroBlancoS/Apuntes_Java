@@ -1,0 +1,17 @@
+﻿server:
+  port: 8082
+  error:
+    include-stacktrace: never
+    include-message: always
+    include-binding-errors: always
+spring:
+  application:
+    name: Token
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true

@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>springboot.feignclient</groupId>
+        <groupId>springboot.token</groupId>
         <artifactId>workspace-parent</artifactId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>springboot.feignclient</groupId>
+    <groupId>springboot.token</groupId>
     <artifactId>User</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -136,6 +136,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.commonbookstore</groupId>
+            <artifactId>CommonBookstore</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

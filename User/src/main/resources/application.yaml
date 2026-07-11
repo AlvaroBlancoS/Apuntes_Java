@@ -8,6 +8,7 @@ spring:
   application:
     name: User
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: update
     show-sql: true
