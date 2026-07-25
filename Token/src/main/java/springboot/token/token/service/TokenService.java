@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import springboot.dto.LoginUserDto;
 import springboot.entity.User;
-import springboot.token.token.dto.TokenResponseDto;
-import springboot.token.token.entity.Token;
-import springboot.token.token.entity.TokenType;
-import springboot.token.token.repository.TokenRepository;
-import springboot.token.token.repository.TokenUserRepository;
+import springboot.security.dto.TokenResponseDto;
+import springboot.security.entity.Token;
+import springboot.security.entity.TokenType;
+import springboot.security.repository.TokenRepository;
+import springboot.security.repository.TokenUserRepository;
 import springboot.util.exception.CustomException;
 import springboot.util.exception.MessageException;
 
