@@ -5,22 +5,23 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import lombok.RequiredArgsConstructor;
+
 import springboot.dto.MailDto;
 import springboot.entity.Mail;
+import springboot.mapper.MailMapper;
 import springboot.repository.EmailRepository;
-import springboot.token.mail.mapper.Mapper;
+import springboot.util.exception.CustomException;
+import springboot.util.exception.MessageException;
 
 @Service
 @RequiredArgsConstructor
 public class MailService {
 
     private final EmailRepository emailRepository;
-    private final Mapper mapperEmail;
+    private final MailMapper mapperEmail;
 
     public List<MailDto> getAllMails(Sort sort) {
         List<Mail> mails = emailRepository.findAll(sort);
@@ -31,21 +32,20 @@ public class MailService {
 
     public MailDto getMailByName(String name) {
         Mail mail = emailRepository.findByMail(name)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Correo electrónico no encontrado"));
+                .orElseThrow(() -> new CustomException(MessageException.MAIL_NOT_FOUND));
         return mapperEmail.convertToDto(mail);
     }
 
     public MailDto getMailById( UUID id) {
         Mail mail = emailRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Correo electrónico no encontrado"));
+                .orElseThrow(() -> new CustomException(MessageException.MAIL_NOT_FOUND));
         return mapperEmail.convertToDto(mail);
     }
 
     public MailDto createMail(MailDto dto) {
         boolean mailExists = emailRepository.findByMail(dto.getMail()).isPresent();
         if (mailExists) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El correo electrónico ya existe");
+            throw new CustomException(MessageException.MAIL_EXISTS);
         }
         Mail mail = mapperEmail.convertToEntity(dto);
         Mail savedMail = emailRepository.save(mail);
@@ -54,8 +54,8 @@ public class MailService {
 
     public MailDto updateMail(UUID id, MailDto dto) {
         Mail existingMail = emailRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Correo electrónico no encontrado"));
-        Mail updatedMail = mapperEmail.updateMail(dto, existingMail);
+                .orElseThrow(() -> new CustomException(MessageException.MAIL_NOT_FOUND));
+        Mail updatedMail = mapperEmail.updateEntity(dto, existingMail);
         Mail savedMail = emailRepository.save(updatedMail);
         return mapperEmail.convertToDto(savedMail);
     }
@@ -64,7 +64,7 @@ public class MailService {
         if (mailExists(null, id, 2)) {
             emailRepository.deleteById(id);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Correo electrónico no encontrado");
+            throw new CustomException(MessageException.MAIL_NOT_FOUND);
         }
     }
 
@@ -73,7 +73,7 @@ public class MailService {
             Mail mail = emailRepository.findByMail(name).get();
             emailRepository.delete(mail);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Correo electrónico no encontrado");
+            throw new CustomException(MessageException.MAIL_NOT_FOUND);
         }
     }
 

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -14,14 +15,17 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import springboot.entity.User;
+import springboot.repository.UserRepository;
 import springboot.security.entity.Token;
 import springboot.security.repository.TokenRepository;
 
 @Component
 @RequiredArgsConstructor
 public class BearerTokenFilter extends OncePerRequestFilter {
-    
- private final TokenRepository tokenRepository;
+
+    private final TokenRepository tokenRepository;
+    private final UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(
@@ -43,14 +47,22 @@ public class BearerTokenFilter extends OncePerRequestFilter {
                 .orElse(null);
 
         if (token != null && token.getExpirationDate().isAfter(LocalDateTime.now())) {
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(
-                            token.getUserId(),
-                            null,
-                            List.of()
-                    );
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            User user = userRepository.findById(token.getUserId())
+                    .orElse(null);
+
+            if (user != null) {
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
+                                user.getId(),
+                                null,
+                                List.of(new SimpleGrantedAuthority(
+                                        "ROLE_" + user.getRoleType().name()
+                                ))
+                        );
+
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
 
         filterChain.doFilter(request, response);

@@ -2,10 +2,20 @@ package springboot.mapper;
 
 import java.util.UUID;
 
+import org.springframework.stereotype.Component;
+
+import lombok.RequiredArgsConstructor;
 import springboot.dto.MailDto;
 import springboot.entity.Mail;
+import springboot.repository.EmailRepository;
+import springboot.util.exception.CustomException;
+import springboot.util.exception.MessageException;
 
-public class MailMapper implements Mapper<springboot.entity.Mail, springboot.dto.MailDto> {
+@Component
+@RequiredArgsConstructor
+public class MailMapper implements Mapper<Mail, MailDto> {
+
+    private final EmailRepository emailRepository;
 
     @Override
     public Mail convertToEntity(MailDto dto) {
@@ -31,14 +41,13 @@ public class MailMapper implements Mapper<springboot.entity.Mail, springboot.dto
         return entityExisting;
     }
 
-    @Override
     public Mail getEntityById(UUID id) {
-        return null;
+        return emailRepository.findById(id).orElseThrow(() -> new CustomException(MessageException.MAIL_NOT_FOUND));
     }
 
-    @Override
     public Mail getEntityByName(String name) {
-        return null;
+        return emailRepository.findByMail(name)
+                .orElseThrow(() -> new CustomException(MessageException.MAIL_NOT_FOUND));
     }
 
 }

@@ -6,6 +6,12 @@ import org.hibernate.annotations.ColumnDefault;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,10 +41,15 @@ public class User {
 
     @Column(nullable = false)
     private String password;
-
+			
     @Column(name = "mail_id", nullable = false)
     private UUID mailId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mail_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_users_mail"))
+    private Mail mail;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     @ColumnDefault("'USER'")
     private RoleType roleType;

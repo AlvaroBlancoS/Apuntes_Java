@@ -1,7 +1,5 @@
 package springboot.mapper;
 
-import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -46,15 +44,4 @@ public class UserMapper implements Mapper<User, UserDto> {
         entityExisting.setMailId(dto.getMailId() != null ? mailMapper.getEntityById(dto.getMailId()).getId() : entityExisting.getMailId());
         return entityExisting;
     }
-
-    @Override
-    public User getEntityById(UUID id) {
-        return null;
-    }
-
-    @Override
-    public User getEntityByName(String name) {
-        return null;
-    }
-
 }

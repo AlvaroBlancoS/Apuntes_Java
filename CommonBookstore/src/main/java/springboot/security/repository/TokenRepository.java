@@ -1,5 +1,6 @@
-﻿package springboot.security.repository;
+package springboot.security.repository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -13,4 +14,6 @@ import springboot.security.entity.Token;
 public interface TokenRepository extends JpaRepository<Token, UUID> {
 
     Optional<Token> findByToken(String token);
+
+    void deleteAllByExpirationDateBefore(LocalDateTime dateTime);
 }

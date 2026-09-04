@@ -10,8 +10,5 @@ import springboot.entity.Mail;
 @Repository
 public interface EmailRepository extends JpaRepository <Mail, UUID> {
 
-
     Optional<Mail> findByMail(String mail);
-    Optional<Mail> findByName(String name);
-
 }

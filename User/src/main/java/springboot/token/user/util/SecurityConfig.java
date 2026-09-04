@@ -11,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
+
 import springboot.security.BearerTokenFilter;
 
 @Configuration
@@ -38,10 +39,13 @@ public class SecurityConfig {
                                                 .permitAll()
                                                 .requestMatchers(HttpMethod.GET, "/api/users/**")
                                                 .hasAnyRole("USER", "ADMIN")
+                                                
                                                 .requestMatchers(HttpMethod.POST, "/api/users/**")
-                                                .hasAnyRole("ADMIN", "USER")
+                                                .hasRole("ADMIN")
+                                                
                                                 .requestMatchers(HttpMethod.PUT, "/api/users/**")
-                                                .hasAnyRole("ADMIN")
+                                                .hasRole("ADMIN")
+                                                
                                                 .requestMatchers(HttpMethod.DELETE, "/api/users/**")
                                                 .hasRole("ADMIN")
                                                 .anyRequest().authenticated())

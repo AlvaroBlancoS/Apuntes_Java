@@ -1,4 +1,4 @@
-﻿package springboot.token.token.util;
+package springboot.token.token.util;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

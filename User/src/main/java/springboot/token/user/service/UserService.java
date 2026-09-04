@@ -5,11 +5,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import lombok.RequiredArgsConstructor;
 import springboot.dto.ChangePasswordDto;
 import springboot.dto.LoginUserDto;
@@ -18,8 +15,10 @@ import springboot.entity.Mail;
 import springboot.entity.User;
 import springboot.mapper.MailMapper;
 import springboot.mapper.UserMapper;
+import springboot.repository.UserRepository;
+import springboot.util.exception.CustomException;
+import springboot.util.exception.MessageException;
 import springboot.dto.MailDto;
-import springboot.token.user.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -39,19 +38,19 @@ public class UserService {
 
     public UserDto getUserByName(String name) {
         User user = userRepository.findByName(name)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+                .orElseThrow(() -> new CustomException(MessageException.USER_NOT_FOUND));
         return userMapper.convertToDto(user);
     }
 
     public UserDto getUserById(UUID id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+                .orElseThrow(() -> new CustomException(MessageException.USER_NOT_FOUND));
         return userMapper.convertToDto(user);
     }
 
     public MailDto getMailByUserId(UUID id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+                .orElseThrow(() -> new CustomException(MessageException.USER_NOT_FOUND));
 
         MailDto mailRquest = mailMapper.convertToDto(mailMapper.getEntityById(user.getMailId()));
         return MailDto.builder()
@@ -63,7 +62,7 @@ public class UserService {
 
     public String insertPassword(LoginUserDto loginUserDto) {
         User user = userRepository.findByName(loginUserDto.getUserName())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+                .orElseThrow(() -> new CustomException(MessageException.USER_NOT_FOUND));
 
         System.out.println("Contraseña proporcionada: " + loginUserDto.getPassword());
         boolean isValid = passwordEncoder.matches(
@@ -71,7 +70,7 @@ public class UserService {
                 user.getPassword());
 
         if (!isValid) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Contraseña incorrecta");
+            throw new CustomException(MessageException.PASSWORD_INCORRECT);
         }
 
         return "Login exitoso";
@@ -87,7 +86,7 @@ public class UserService {
      */
     public LoginUserDto changePassword(LoginUserDto loginUserDto) {
         User user = userRepository.findByName(loginUserDto.getUserName())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+                .orElseThrow(() -> new CustomException(MessageException.USER_NOT_FOUND));
 
         String encodedPassword = passwordEncoder.encode(loginUserDto.getPassword());
 
@@ -96,8 +95,7 @@ public class UserService {
                 user.getPassword());
 
         if (isValid) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "La nueva contraseña no puede ser igual a la contraseña actual");
+            throw new CustomException(MessageException.PASSWORD_SAME);
         }
         user.setPassword(encodedPassword);
         userRepository.save(user);
@@ -107,25 +105,25 @@ public class UserService {
                 .password(encodedPassword)
                 .build();
     }
+
     /**
-     * Este método es una versión mejorada del cambio de contraseña, 
-     * que incluye validaciones adicionales para garantizar 
+     * Este método es una versión mejorada del cambio de contraseña,
+     * que incluye validaciones adicionales para garantizar
      * la seguridad y la integridad de la operación.
+     * 
      * @param dto
      * @return
      */
     public String changePasswordSecure(ChangePasswordDto dto) {
         User user = userRepository.findByName(dto.getUserName())
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+                .orElseThrow(() -> new CustomException(MessageException.USER_NOT_FOUND));
 
         boolean currentPasswordMatches = passwordEncoder.matches(
                 dto.getCurrentPassword(),
                 user.getPassword());
 
         if (!currentPasswordMatches) {
-            throw new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED, "La contraseña actual no es correcta");
+            throw new CustomException(MessageException.PASSWORD_INCORRECT);
         }
 
         boolean samePassword = passwordEncoder.matches(
@@ -133,8 +131,7 @@ public class UserService {
                 user.getPassword());
 
         if (samePassword) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, "La nueva contraseña no puede ser igual a la actual");
+            throw new CustomException(MessageException.PASSWORD_SAME);
         }
 
         String encodedNewPassword = passwordEncoder.encode(dto.getNewPassword());
@@ -147,7 +144,7 @@ public class UserService {
     public UserDto createUser(UserDto dto) {
         boolean userExists = userRepository.findByName(dto.getName()).isPresent();
         if (userExists) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El usuario ya existe");
+            throw new CustomException(MessageException.USER_ALREADY_EXISTS);
         }
 
         User user = userMapper.convertToEntity(dto);
@@ -157,7 +154,7 @@ public class UserService {
 
     public UserDto updateUser(UserDto dto) {
         User existingUser = userRepository.findById(dto.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+                .orElseThrow(() -> new CustomException(MessageException.USER_NOT_FOUND));
         User updatedUser = userMapper.updateEntity(dto, existingUser);
         User savedUser = userRepository.save(updatedUser);
         return userMapper.convertToDto(savedUser);
@@ -165,7 +162,7 @@ public class UserService {
 
     public MailDto getUserEmailByName(String name) {
         User user = userRepository.findByName(name)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+                .orElseThrow(() -> new CustomException(MessageException.USER_NOT_FOUND));
         Mail mailRquest = mailMapper.getEntityById(user.getMailId());
         return MailDto.builder()
                 .id(mailRquest.getId())
@@ -177,7 +174,7 @@ public class UserService {
     public UserDto getUserByEmail(String email) {
         Mail mail = mailMapper.getEntityByName(email);
         User user = userRepository.findByMailId(mail.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+                .orElseThrow(() -> new CustomException(MessageException.USER_NOT_FOUND));
         return userMapper.convertToDto(user);
     }
 
@@ -185,7 +182,7 @@ public class UserService {
         if (userExists(null, id, 2)) {
             userRepository.deleteById(id);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
+            throw new CustomException(MessageException.USER_NOT_FOUND);
         }
     }
 
@@ -194,7 +191,7 @@ public class UserService {
             User user = userRepository.findByName(name).get();
             userRepository.delete(user);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
+            throw new CustomException(MessageException.USER_NOT_FOUND);
         }
     }
 

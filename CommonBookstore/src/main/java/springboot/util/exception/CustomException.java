@@ -9,7 +9,7 @@ public class CustomException extends RuntimeException {
     private final MessageException messageException;
 
     public CustomException(MessageException messageException) {
-        super(messageException.getMessage());
+        super(messageException.getCode());
         this.messageException = messageException;
     }
 

@@ -1,4 +1,4 @@
-package springboot.token.user.repository;
+package springboot.repository;
 
 import java.util.Optional;
 import java.util.UUID;

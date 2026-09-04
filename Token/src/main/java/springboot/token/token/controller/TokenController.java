@@ -1,4 +1,4 @@
-﻿package springboot.token.token.controller;
+package springboot.token.token.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import springboot.dto.LoginUserDto;
-import springboot.token.token.dto.TokenResponseDto;
+import springboot.security.dto.TokenResponseDto;
 import springboot.token.token.service.TokenService;
 
 @RestController

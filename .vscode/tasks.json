@@ -20,6 +20,16 @@
             },
             "group": "build",
             "problemMatcher": []
+        },
+        {
+            "label": "Maven: Build Token",
+            "type": "shell",
+            "command": "mvn clean install",
+            "options": {
+                "cwd": "${workspaceFolder}/Token"
+            },
+            "group": "build",
+            "problemMatcher": []
         }
     ]
 }
