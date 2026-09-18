@@ -39,7 +39,7 @@ La respuesta incluye datos comunes:
 | `message` | Mensaje que puede leer una persona. |
 | `path` | Endpoint que recibió la petición. |
 
-### A. Errores de validación: `MethodArgumentNotValidException`
+### A. Errores de validación: [`MethodArgumentNotValidException`](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/CommonBookstore/src/main/java/springboot/util/exception/GlobalExceptionHandler.java#L21)
 
 Este manejador se activa cuando Spring intenta validar un DTO y alguna regla no se cumple.
 
@@ -85,7 +85,7 @@ Ejemplo de respuesta para una contraseña inválida:
 
 ---
 
-## 2. `CustomException`: la forma de decir «este caso de negocio ha fallado»
+## 2. [`CustomException`](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/CommonBookstore/src/main/java/springboot/util/exception/CustomException.java#L7): la forma de decir «este caso de negocio ha fallado»
 
 No todos los errores dependen de la forma de los datos. A veces los datos son válidos, pero la operación no puede continuar:
 
