@@ -30,6 +30,122 @@ flowchart LR
 
 ---
 
+# 0. Las clases que encienden los proyectos
+
+## Idea en 20 segundos
+
+Cada clase `*Application` es el **botón de arranque** de su módulo: Spring Boot empieza desde su método `main`. Las anotaciones que están encima indican qué código compartido debe encontrar Spring.
+
+```mermaid
+flowchart LR
+    M[Arranca Mail] --> E[Crea los correos base]
+    E --> U[Arranca User]
+    U --> R[Crea user y admin]
+    R --> T[Arranca Token y realiza login]
+```
+
+**Orden práctico de primera ejecución:** inicia `Mail`, después `User` y, por último, `Token`. `UserApplication` necesita que ya existan los correos `user@user.com` y `admin@admin.com`.
+
+## `TokenApplication`: prepara el módulo que emite tokens
+
+Archivo: `Token/src/main/java/springboot/token/token/TokenApplication.java`.
+
+```java
+@SpringBootApplication
+@EntityScan(basePackages = {
+    "springboot.entity", "springboot.security.entity", "springboot.token.token.entity"
+})
+@EnableJpaRepositories(basePackages = {
+    "springboot.repository", "springboot.security.repository", "springboot.token.token.repository"
+})
+@ComponentScan(basePackages = { "springboot.token.token", "springboot.util.exception" })
+public class TokenApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(TokenApplication.class, args);
+    }
+}
+```
+
+- `@SpringBootApplication`: activa Spring Boot y arranca el servidor.
+- `@EntityScan`: encuentra entidades como `User`, `Mail` y `Token` para poder leerlas y guardarlas en la base de datos.
+- `@EnableJpaRepositories`: encuentra repositorios, incluido `TokenRepository`.
+- `@ComponentScan`: encuentra controladores, servicios, configuración y manejo de errores propios de Token.
+
+**Qué recordar:** Token puede consultar usuarios y correos porque escanea el código compartido, pero su tarea principal es crear el ticket de acceso.
+
+## `MailApplication`: crea los correos de ejemplo y carga el filtro
+
+Archivo: `Mail/src/main/java/springboot/token/mail/MailApplication.java`.
+
+```java
+@SpringBootApplication
+@EntityScan(basePackages = { "springboot.entity", "springboot.security.entity" })
+@EnableJpaRepositories(basePackages = { "springboot.repository", "springboot.security.repository" })
+@Import({ MailMapper.class, BearerTokenFilter.class, GlobalExceptionHandler.class })
+public class MailApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MailApplication.class, args);
+    }
+}
+```
+
+`@Import` incorpora clases de `CommonBookstore` que este proyecto necesita: el conversor de correos, el filtro que reconoce `Bearer` y el manejo común de errores.
+
+Al terminar de arrancar, este bloque crea datos iniciales si aún no están:
+
+```java
+@Bean
+CommandLineRunner commandLineRunner(EmailRepository emailRepository) {
+    return args -> {
+        if (!emailRepository.findByMail("user@user.com").isPresent()
+                && !emailRepository.findByMail("admin@admin.com").isPresent()) {
+            emailRepository.save(new Mail(null, "user@user.com", "User email accesing token"));
+            emailRepository.save(new Mail(null, "admin@admin.com", "Admin email accessing token"));
+        }
+    };
+}
+```
+
+**Resultado:** quedan preparados los dos correos que utilizará el proyecto User.
+
+## `UserApplication`: crea los usuarios de ejemplo y sus roles
+
+Archivo: `User/src/main/java/springboot/token/user/UserApplication.java`.
+
+```java
+@SpringBootApplication
+@EntityScan(basePackages = { "springboot.entity", "springboot.security.entity" })
+@EnableJpaRepositories(basePackages = { "springboot.repository", "springboot.security.repository" })
+@ComponentScan(basePackages = { "springboot.token.user", "springboot.mapper" })
+@Import({ BearerTokenFilter.class, GlobalExceptionHandler.class })
+public class UserApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(UserApplication.class, args);
+    }
+}
+```
+
+La diferencia importante con Mail es que aquí `@ComponentScan` descubre los controladores, servicios y mappers de usuarios. `@Import` añade el filtro Bearer compartido y el gestor de errores.
+
+Su `CommandLineRunner` busca primero los dos correos creados por Mail y, si no existen ambos usuarios, crea estas cuentas:
+
+```java
+userRepository.save(User.builder()
+    .name("user").password("user").mailId(mailId)
+    .roleType(RoleType.USER).build());
+
+userRepository.save(User.builder()
+    .name("admin").password("admin").mailId(mailIdAdmin)
+    .roleType(RoleType.ADMIN).build());
+```
+
+- `user` tiene `ROLE_USER`: puede consultar recursos.
+- `admin` tiene `ROLE_ADMIN`: también puede crear, editar y borrar.
+
+> **Atención:** estas contraseñas de ejemplo están escritas en texto plano para arrancar la demo. No deben usarse así en una aplicación real.
+
+---
+
 # 1. CommonBookstore: la caja de piezas compartidas
 
 Ruta base: [`CommonBookstore/src/main/java/springboot/security`.](https://github.com/AlvaroBlancoS/Apuntes_Java/tree/spring_boot/token/CommonBookstore/src/main/java/springboot/security)
