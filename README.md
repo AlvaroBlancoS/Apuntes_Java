@@ -32,11 +32,11 @@ flowchart LR
 
 # 1. CommonBookstore: la caja de piezas compartidas
 
-Ruta base: `CommonBookstore/src/main/java/springboot/security`.
+Ruta base: [`CommonBookstore/src/main/java/springboot/security`.](https://github.com/AlvaroBlancoS/Apuntes_Java/tree/spring_boot/token/CommonBookstore/src/main/java/springboot/security)
 
 ## `Token`: qué se guarda
 
-Archivo: `security/entity/Token.java`.
+Archivo: [`security/entity/Token.java`.](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/CommonBookstore/src/main/java/springboot/security/entity/Token.java#L31)
 
 Representa una fila de la tabla `token.tokens`. Contiene:
 
@@ -66,7 +66,7 @@ No es necesario memorizar las anotaciones JPA ahora: señalan que la clase se gu
 
 ## `TokenType`: el prefijo esperado
 
-Archivo: `security/entity/TokenType.java`.
+Archivo: [`security/entity/TokenType.java`.](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/CommonBookstore/src/main/java/springboot/security/entity/TokenType.java)
 
 El `enum` solo define `BEARER`. Por eso el cliente debe enviar exactamente este formato:
 
@@ -86,7 +86,7 @@ Esta clase deja preparado el proyecto para admitir otros tipos en el futuro, aun
 
 ## `TokenRepository`: hablar con la tabla de tokens
 
-Archivo: `security/repository/TokenRepository.java`.
+Archivo: [`security/repository/TokenRepository.java`.](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/CommonBookstore/src/main/java/springboot/security/repository/TokenRepository.java)
 
 Hereda operaciones estándar de `JpaRepository<Token, UUID>` y añade dos consultas importantes:
 
@@ -96,7 +96,7 @@ deleteAllByExpirationDateBefore(LocalDateTime dateTime)
 ```
 
 - La primera localiza el ticket recibido en el encabezado.
-- La segunda permite borrar tokens ya caducados. `TokenService` tiene el método `deleteExpiredTokens()`, aunque en el código actual no hay una tarea programada que lo invoque automáticamente.
+- La segunda permite borrar tokens ya caducados. [`TokenService`](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/Token/src/main/java/springboot/token/token/service/TokenService.java) tiene el método [`deleteExpiredTokens()`](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/Token/src/main/java/springboot/token/token/service/TokenService.java#L131), aunque en el código actual no hay una tarea programada que lo invoque automáticamente.
 
 ```java
 public interface TokenRepository extends JpaRepository<Token, UUID> {
@@ -107,7 +107,7 @@ public interface TokenRepository extends JpaRepository<Token, UUID> {
 
 ## `BearerTokenFilter`: el portero
 
-Archivo: `security/BearerTokenFilter.java`.
+Archivo: [`security/BearerTokenFilter.java`](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/CommonBookstore/src/main/java/springboot/security/BearerTokenFilter.java#L25).
 
 Se ejecuta una vez por petición porque extiende `OncePerRequestFilter`.
 
@@ -128,7 +128,7 @@ flowchart TD
 Detalles que importan:
 
 1. Si falta el encabezado, está mal formado, no existe el token, ha expirado o no existe su usuario, el filtro **no autentica**.
-2. Si todo es correcto, crea un `UsernamePasswordAuthenticationToken` con el ID del usuario y la autoridad `ROLE_` + su `RoleType`.
+2. Si todo es correcto, crea un [`UsernamePasswordAuthenticationToken`](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/CommonBookstore/src/main/java/springboot/security/BearerTokenFilter.java#L55) con el ID del usuario y la autoridad `ROLE_` + su `RoleType`.
 3. El filtro no responde directamente con un error: deja continuar la petición. Después, Spring Security deniega las rutas que requieren autenticación o un rol.
 
 El núcleo del código es este:
@@ -151,11 +151,11 @@ if (token != null && token.getExpirationDate().isAfter(LocalDateTime.now())) {
 
 # 2. Proyecto Token: crear el ticket
 
-Ruta: `Token/src/main/java/springboot/token/token`.
+Ruta: [`Token/src/main/java/springboot/token/token`.](https://github.com/AlvaroBlancoS/Apuntes_Java/tree/spring_boot/token/Token/src/main/java/springboot/token/token)
 
 ## El inicio de sesión, paso a paso
 
-El endpoint es `POST /api/tokens/login` en `TokenController`.
+El endpoint es [`POST /api/tokens/login`](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/Token/src/main/java/springboot/token/token/controller/TokenController.java#L25) en `TokenController`.
 
 ```json
 {
@@ -171,13 +171,13 @@ El endpoint es `POST /api/tokens/login` en `TokenController`.
 3. Genera 48 bytes aleatorios con `SecureRandom`.
 4. Los codifica en Base64 URL-safe sin relleno.
 5. Guarda un `Token` de tipo `BEARER`, válido durante **2 horas**.
-6. Devuelve un `TokenResponseDto` con el valor del token y sus fechas.
+6. Devuelve un [`TokenResponseDto`](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/CommonBookstore/src/main/java/springboot/security/dto/TokenResponseDto.java) con el valor del token y sus fechas.
 
 Después, copia solo el campo `token` y úsalo en `Authorization` para llamar a `User` o `Mail`.
 
 ## `SecurityConfig`: qué permite Token
 
-Archivo: `Token/.../util/SecurityConfig.java`.
+Archivo: [`Token/.../util/SecurityConfig.java`.](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/Token/src/main/java/springboot/token/token/util/SecurityConfig.java)
 
 - Declara un `BCryptPasswordEncoder`, usado para comprobar contraseñas.
 - Desactiva CSRF, apropiado para una API sin formularios con sesión.
@@ -210,11 +210,11 @@ Por ello Token no declara en código el esquema global `bearerAuth` que sí exis
 
 # 3. Proyecto User: proteger usuarios por rol
 
-Rutas: `User/src/main/java/springboot/token/user` y puerto `8081`.
+Rutas: [`User/src/main/java/springboot/token/user`](https://github.com/AlvaroBlancoS/Apuntes_Java/tree/spring_boot/token/User) y puerto `8081`.
 
-## `SecurityConfig`: reglas en una mirada
+## [`SecurityConfig`](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/User/src/main/java/springboot/token/user/util/SecurityConfig.java#L31): reglas en una mirada
 
-El filtro compartido se inserta antes de `UsernamePasswordAuthenticationFilter` y la aplicación es **stateless**: no guarda sesión en el servidor.
+El filtro compartido se inserta antes de [`UsernamePasswordAuthenticationFilter`](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/User/src/main/java/springboot/token/user/util/SecurityConfig.java#L54) y la aplicación es **stateless**: no guarda sesión en el servidor.
 
 | Operación sobre `/api/users/**` | Rol necesario |
 | --- | --- |
@@ -242,7 +242,7 @@ http.csrf(csrf -> csrf.disable())
 
 ## `OpenApiConfig`: el botón Authorize de Swagger
 
-Archivo: `User/.../OpenApiConfig.java`.
+Archivo: [`User/.../OpenApiConfig.java`](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/User/src/main/java/springboot/token/user/OpenApiConfig.java#L16).
 
 Configura título, versión y descripción de la documentación. También define un esquema HTTP llamado `bearerAuth` y lo aplica como requisito global.
 
@@ -272,9 +272,9 @@ La primera línea hace que Swagger solicite autenticación para las operaciones 
 
 # 4. Proyecto Mail: misma puerta, otros recursos
 
-Ruta: `Mail/src/main/java/springboot/token/mail` y puerto `8080`.
+Ruta: [`Mail/src/main/java/springboot/token/mail`](https://github.com/AlvaroBlancoS/Apuntes_Java/tree/spring_boot/token/Mail/src/main/java/springboot/token/mail) y puerto `8080`.
 
-## `SecurityConfig`
+## [`SecurityConfig`](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/Mail/src/main/java/springboot/token/mail/SecurityConfig.java#L30)
 
 Tiene el mismo patrón que User:
 
@@ -293,7 +293,7 @@ El código es equivalente al de User, cambiando solo la ruta:
 .addFilterBefore(bearerTokenFilter, UsernamePasswordAuthenticationFilter.class);
 ```
 
-## `OpenApiConfig`
+## [`OpenApiConfig`](https://github.com/AlvaroBlancoS/Apuntes_Java/blob/spring_boot/token/Mail/src/main/java/springboot/token/mail/OpenApiConfig.java#L16)
 
 Configura el título «Servicio de correos» y registra/aplica el esquema `bearerAuth`. El uso en Swagger es idéntico al de User: inicia sesión en Token, copia el valor y autoriza en Swagger de Mail.
 
